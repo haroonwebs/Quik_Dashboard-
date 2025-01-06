@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "./models /usersModel";
+import { Order } from "./models /ordersModel";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -12,5 +13,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DATABASE_NAME || "qick_project",
   synchronize: true,
   logging: false,
-  entities: [User],
+  entities: [User, Order],
 });
