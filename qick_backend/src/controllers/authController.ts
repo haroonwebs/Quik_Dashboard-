@@ -60,7 +60,7 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
     const { password: string, ...resUser } = newUser;
     if (resUser) {
       // generating token
-      const token = generateToken({ id: resUser.id });
+      const token = generateToken({ id: resUser.id, role: resUser.role });
       return res.status(201).json({
         success: true,
         message: "Signup successfuly",
@@ -105,7 +105,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
         message: "Invalid Password !",
       });
     }
-    const token = generateToken({ id: user.id });
+    const token = generateToken({ id: user.id, role: user.role });
     if (!token) {
       return res.status(401).json({
         success: false,

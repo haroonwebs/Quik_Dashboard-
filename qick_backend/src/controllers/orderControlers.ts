@@ -3,6 +3,7 @@ import { AppDataSource } from "../dbConnection";
 import { ordertypes } from "./types/orderTypes";
 import Joi from "joi";
 import { Order } from "../models /ordersModel";
+import { In } from "typeorm";
 
 const orderSchemma = Joi.object({
   order_name: Joi.string().min(4).required(),
@@ -89,24 +90,18 @@ export const getAllOrders = async (
   try {
     const orderRepositery = AppDataSource.getRepository(Order);
 
-    const orderStatus = req.query.order_status as string;
-
-    const orders = orderStatus
-      ? await orderRepositery.find({ where: { order_status: orderStatus } })
-      : await orderRepositery.find();
-
+    const orders = await orderRepositery.find();
+    const orderCount = orders.length;
     if (!orders) {
       return res.status(404).json({
         success: false,
         message: "something went wrong to get orders",
       });
     }
-
-    if (orderStatus && orders.length === 0) {
+    if (orders.length === 0) {
       return res.status(200).json({
-        success: true,
-        message: "Orders Against this status Not found!",
-        orders,
+        success: false,
+        message: " Order Not available",
       });
     }
 
@@ -114,6 +109,7 @@ export const getAllOrders = async (
       success: true,
       message: "orders successfuly fetched",
       orders,
+      count: orderCount,
     });
   } catch (error: any) {
     return res.status(500).json({
@@ -122,9 +118,44 @@ export const getAllOrders = async (
     });
   }
 };
-function elseif(p0: boolean) {
-  throw new Error("Function not implemented.");
-}
+
+export const OrdersByStatus = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const orderRepositery = AppDataSource.getRepository(Order);
+    const { status } = req.query as any;
+    const orders = await orderRepositery.find({
+      where: { order_status: status },
+    });
+    const orderCount = orders.length;
+    if (!orders) {
+      return res.status(404).json({
+        success: false,
+        message: "something went wrong to get orders",
+      });
+    }
+    if (orders.length === 0) {
+      return res.status(200).json({
+        success: false,
+        message: "Orders Not available",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "orders successfuly fetched",
+      orders,
+      count: orderCount,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: `internal server error: ${error}`,
+    });
+  }
+};
 
 // update order function
 

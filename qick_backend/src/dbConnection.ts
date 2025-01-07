@@ -1,7 +1,10 @@
+import dotenv from "dotenv";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "./models /usersModel";
 import { Order } from "./models /ordersModel";
+
+dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: "postgres",

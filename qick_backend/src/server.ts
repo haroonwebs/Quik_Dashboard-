@@ -1,13 +1,12 @@
+import dotenv from "dotenv";
 import express from "express";
 import { AppDataSource } from "./dbConnection";
 import router from "./routes/applicationRoutes";
+import "./utils/autoUpdateStatusCron";
 
 import cors from "cors";
 
-import * as dotenv from "dotenv";
-
 dotenv.config();
-
 const PORT = process.env.PORT || 4000;
 
 const app = express();

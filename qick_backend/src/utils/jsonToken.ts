@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "jfoefbaeflksafo";
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 export const generateToken = (payload: object): string => {
   try {
