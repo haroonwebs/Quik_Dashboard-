@@ -7,4 +7,5 @@ export type ordertypes = {
   order_status: string;
   updated_at: Date;
   created_at: Date;
+  count: any;
 };

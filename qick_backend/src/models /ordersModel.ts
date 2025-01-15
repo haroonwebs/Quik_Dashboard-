@@ -25,8 +25,15 @@ export class Order {
 
   @Column({
     type: "enum",
-    enum: ["active", "delayed", "delivered"],
-    default: "active",
+    enum: [
+      "pickup awaiting",
+      "pickedup",
+      "warehouse",
+      "delivery attempt tried",
+      "delivered",
+      "delayed",
+    ],
+    default: "pickup awaiting",
   })
   order_status: string | undefined;
 

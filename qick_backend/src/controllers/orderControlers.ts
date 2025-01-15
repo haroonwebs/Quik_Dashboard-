@@ -10,7 +10,14 @@ const orderSchemma = Joi.object({
   order_description: Joi.string().min(10).max(1000).required(),
   order_value: Joi.number().min(10).required(),
   delivery_date: Joi.date().required(),
-  order_status: Joi.string().valid("active", "delayed", "delivered"),
+  order_status: Joi.string().valid(
+    "pickup awaiting",
+    "pickedup",
+    "warehouse",
+    "delivery attempt tried",
+    "delivered",
+    "delayed"
+  ),
 });
 
 export const generate_Order = async (
