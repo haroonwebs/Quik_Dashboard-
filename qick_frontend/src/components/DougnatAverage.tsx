@@ -6,16 +6,20 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface DougnatAverageProps {
-  // lessValue: number | never[];
-  // graterValue: number | never[];
+  lessValue: number | never[];
+  graterValue: number | never[];
   total: number;
 }
 
-const DougnatAverage: React.FC<DougnatAverageProps> = ({ total }) => {
+const DougnatAverage: React.FC<DougnatAverageProps> = ({
+  total,
+  lessValue,
+  graterValue,
+}) => {
   const data = {
     datasets: [
       {
-        data: [35, 100],
+        data: [lessValue, graterValue],
         backgroundColor: ["#639787", "#8AEFD1"],
         borderColor: ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
         borderWidth: 1,

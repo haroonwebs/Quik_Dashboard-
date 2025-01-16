@@ -1,11 +1,13 @@
-import DougnatDelay from "@/components/DougnatDelay";
-import DougnatLive from "@/components/DougnatLive";
 import DougnatAverage from "@/components/DougnatAverage";
 import DeliveredOrder from "@/components/DeliveredOrder";
 import MyBarChart from "./(home)/components/MyBarChart";
 import usefetchOrders from "@/hooks/usefetchOrders";
 import { ordertypes } from "@/types/ordertypes";
+import LiveButton from "./(home)/components/LiveButton";
 import Link from "next/link";
+import DelayButton from "./(home)/components/DelayButton";
+import AverageButton from "./(home)/components/AverageButton";
+import DeliveredButton from "./(home)/components/DeliveredButton";
 
 export default async function Home() {
   // used usefetchOrders hook to fetch all orders from the database
@@ -80,8 +82,20 @@ export default async function Home() {
   const totalValue = totalOrdersForAverage.reduce((sum, order) => {
     return sum + Number(order.order_value);
   }, 0);
+
+  const graterValueAverage = Array.isArray(totalOrdersForAverage)
+    ? totalOrdersForAverage?.filter((grater) => grater.order_value > 1000)
+        .length
+    : [];
+  const lessValueAverage = Array.isArray(totalOrdersForAverage)
+    ? totalOrdersForAverage?.filter((grater) => grater.order_value < 1000)
+        .length
+    : [];
+
+  console.log("graterValueAverage", graterValueAverage);
+  console.log("lessValueAverage", lessValueAverage);
   // average value of orders
-  // const averageOrderValue = totalValue / totalOrdersCount;
+  const averageOrderValue = Math.floor(totalValue / totalOrdersCount);
 
   return (
     <section className="bg-[#F5F8FA] min-h-100">
@@ -205,163 +219,29 @@ export default async function Home() {
           </div>
 
           {/* dougnat graphs for live orders */}
-          <div className=" flex items-center shadow-md justify-center gap-2  w-[406px] h-[162px] border-[#4FC9F3] bg-[#4FC9F333] border  rounded-2xl mt-6">
-            <div className="w-[112px] h-[111px]">
-              <DougnatLive
-                graterValue={graterValueLive}
-                total={totalLive}
-                lessValue={lessValueLive}
-              />
-            </div>
-            <div className="h-[111px] w-[243px] ">
-              <span className="text-[18px] font-[600px]">Live Orders</span>
-              <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <img
-                      src="/images/Rectangle 8219.png"
-                      alt="not found"
-                      className="h-[7px] w-[7px]"
-                    />
-                    <span>Value &lt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    {lessValueLive} orders
-                  </div>
-                </div>
-                <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <img
-                      src="/images/Rectangle 8220.png"
-                      alt="not found"
-                      className="h-[7px] w-[7px]"
-                    />
-                    <span>Value &gt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    {graterValueLive} orders
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <LiveButton
+            graterValue={graterValueLive}
+            total={totalLive}
+            lessValue={lessValueLive}
+          />
           {/* dougnat graphs for delayed orders */}
-          <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#FFB5B5] bg-[#FAFAFA] border  rounded-2xl">
-            <div className="w-[112px] h-[111px]">
-              <DougnatDelay
-                graterValue={graterValueDelay}
-                lessValue={lessValueDelay}
-                total={totalDelay}
-              />
-            </div>
-            <div className="h-[111px] w-[243px] ">
-              <span className="text-[18px] font-[600px]">Delayed Orders</span>
-              <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <img
-                      src="/images/Rectangle 8224.png"
-                      alt="not found"
-                      className="h-[7px] w-[7px]"
-                    />
-                    <span>Value &lt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    {lessValueDelay} orders
-                  </div>
-                </div>
-                <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <img
-                      src="/images/Rectangle 8225.png"
-                      alt="not found"
-                      className="h-[7px] w-[7px]"
-                    />
-                    <span>Value &gt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    {graterValueDelay} orders
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DelayButton
+            graterValue={graterValueDelay}
+            lessValue={lessValueDelay}
+            total={totalDelay}
+          />
           {/* dougnat graphs for average order size  */}
-          <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#8AEFD1] bg-[#4FC9F333] border  rounded-2xl ">
-            <div className="w-[112px] h-[111px]">
-              <DougnatAverage total={totalValue} />
-            </div>
-            <div className="h-[111px] w-[243px] ">
-              <span className="text-[18px] font-[600px]">
-                Average Order Size
-              </span>
-              <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <img
-                      src="/images/Rectangle 8215.png"
-                      alt="not found"
-                      className="h-[7px] w-[7px]"
-                    />
-                    <span>Value &lt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    35 orders
-                  </div>
-                </div>
-                <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <img
-                      src="/images/Rectangle 8216.png"
-                      alt="not found"
-                      className="h-[7px] w-[7px]"
-                    />
-                    <span>Value &gt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    35 orders
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <AverageButton
+            total={averageOrderValue}
+            lessValue={lessValueAverage}
+            graterValue={graterValueAverage}
+          />
           {/* dougnat graphs for delivered */}
-          <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#a4f394] bg-[#45e48733] border  rounded-2xl ">
-            <div className="w-[112px] h-[111px]">
-              <DeliveredOrder
-                graterValue={graterValueDelivered}
-                lessValue={lessValueDelivered}
-                total={totalDelivered}
-              />
-            </div>
-            <div className="h-[111px] w-[243px] ">
-              <span className="text-[18px] font-[600px]">Delivered Orders</span>
-              <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <div className="w-[7px] h-[7px] bg-[#1fe070] rounded"></div>
-                    <span>Value &lt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    {lessValueDelivered} orders
-                  </div>
-                </div>
-                <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
-                <div className="flex items-center gap-10">
-                  <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
-                    <div className="w-[7px] h-[7px] bg-[#87f5b5] rounded"></div>
-                    <span>Value &gt; 1000.00L</span>
-                  </div>
-                  <div className="text-xs font-[500px] text-[#7E8299]">
-                    {graterValueDelivered} orders
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DeliveredButton
+            graterValue={graterValueDelivered}
+            lessValue={lessValueDelivered}
+            total={totalDelivered}
+          />
         </div>
       </main>
     </section>
