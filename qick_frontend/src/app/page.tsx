@@ -81,7 +81,7 @@ export default async function Home() {
     return sum + Number(order.order_value);
   }, 0);
   // average value of orders
-  const averageOrderValue = totalValue / totalOrdersCount;
+  // const averageOrderValue = totalValue / totalOrdersCount;
 
   return (
     <section className="bg-[#F5F8FA] min-h-100">
@@ -291,7 +291,7 @@ export default async function Home() {
           {/* dougnat graphs for average order size  */}
           <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#8AEFD1] bg-[#4FC9F333] border  rounded-2xl ">
             <div className="w-[112px] h-[111px]">
-              <DougnatAverage total={averageOrderValue} />
+              <DougnatAverage total={totalValue} />
             </div>
             <div className="h-[111px] w-[243px] ">
               <span className="text-[18px] font-[600px]">

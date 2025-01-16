@@ -2,7 +2,7 @@ import { ordertypes } from "@/types/ordertypes";
 
 const usefetchOrders = async (url: string) => {
   try {
-    const data = await fetch(url);
+    const data = await fetch(url, { cache: "no-store" });
     if (!data) {
       throw new Error("error while fetching orders");
     }

@@ -2,8 +2,8 @@ import { AppDataSource } from "../dbConnection";
 import { Order } from "../models /ordersModel";
 import cron from "node-cron";
 
-cron.schedule("*/5 * * * *", async () => {
-  //run every 5 mints
+cron.schedule("*/10 * * * * *", async () => {
+  //every 10 seconds
   const orderRepository = AppDataSource.getRepository(Order);
   const currentDate = new Date();
   await orderRepository
