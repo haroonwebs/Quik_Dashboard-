@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,8 +30,17 @@ interface MyCharProp {
 }
 
 const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
+  const [status, setStatus] = useState<string | null>("live_orders");
+
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const status = searchParams?.get("order_status");
+    setStatus(status);
+    console.log("status", status);
+  }, [searchParams, status]);
+
   const generateFilteredData = () => {
-    const today = new Date("2025-01-17");
+    const today = new Date();
     let labels = [];
     let data_1 = [];
     let data_2 = [];
@@ -80,24 +91,45 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
     return { labels, data_1, data_2 };
   };
 
+  let datacolor1;
+  let datacolor2;
+  let bordercolor;
+  console.log("s", status);
+  if (status === "average") {
+    datacolor1 = "#639787";
+    datacolor2 = "#8AEFD1";
+    bordercolor = "rgba(28, 58, 106, 1)";
+  } else if (status === "delayed") {
+    datacolor1 = "#FFB5B5";
+    datacolor2 = "#D48989";
+    bordercolor = "rgba(28, 58, 106, 1)";
+  } else if (status === "delivered") {
+    datacolor1 = "#1fe070";
+    datacolor2 = "#87f5b5";
+    bordercolor = "rgba(28, 58, 106, 1)";
+  } else {
+    datacolor1 = "rgba(79, 201, 243, 1)";
+    datacolor2 = "rgba(28, 58, 106, 1)";
+    bordercolor = "rgba(28, 58, 106, 1)";
+  }
   const { labels, data_1, data_2 } = generateFilteredData();
 
-  const chartTata = {
+  const chartTData = {
     labels,
     datasets: [
       {
         label: "Dataset 1",
         data: data_2,
-        backgroundColor: "rgba(79, 201, 243, 1)",
-        borderColor: "rgba(28, 58, 106, 1)",
+        backgroundColor: datacolor1,
+        borderColor: bordercolor,
         borderWidth: 0,
         stack: "Stack 0",
       },
       {
         label: "Dataset 2",
         data: data_1,
-        backgroundColor: "rgba(28, 58, 106, 1)",
-        borderColor: "rgba(79, 201, 243, 1)",
+        backgroundColor: datacolor2,
+        borderColor: bordercolor,
         borderWidth: 0,
         borderRadius: 10,
         stack: "Stack 0",
@@ -132,7 +164,7 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
     },
   };
 
-  return <Bar data={chartTata} options={options} height={200} />;
+  return <Bar data={chartTData} options={options} height={200} />;
 };
 
 export default MyBarChart;

@@ -19,7 +19,7 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
   return (
     <div
       onClick={handle_delivered}
-      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#a4f394] bg-[#45e48733] border  rounded-2xl "
+      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#a4f394] bg-[#45e48733] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl "
     >
       <div className="w-[112px] h-[111px]">
         <DeliveredOrder

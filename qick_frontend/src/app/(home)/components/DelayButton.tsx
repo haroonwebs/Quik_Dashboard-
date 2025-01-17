@@ -19,7 +19,7 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
   return (
     <div
       onClick={handle_delay}
-      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#FFB5B5] bg-[#FAFAFA] border  rounded-2xl"
+      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#FFB5B5] bg-[#FAFAFA] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl"
     >
       <div className="w-[112px] h-[111px]">
         <DougnatDelay

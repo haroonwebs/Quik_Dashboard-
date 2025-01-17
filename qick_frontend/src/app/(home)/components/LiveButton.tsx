@@ -20,7 +20,7 @@ const LiveButton: React.FC<LiveButtonProps> = ({
   return (
     <div
       onClick={handle_LiveUrl}
-      className=" flex items-center shadow-md justify-center gap-2  w-[406px] h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#9dc1ce33] border  rounded-2xl mt-6"
+      className=" flex items-center shadow-md justify-center gap-2  w-[406px] h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-6"
     >
       <div className="w-[112px] h-[111px]">
         <DougnatLive

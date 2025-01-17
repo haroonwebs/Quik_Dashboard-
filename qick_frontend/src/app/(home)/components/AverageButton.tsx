@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import DougnatAverage from "@/components/DougnatAverage";
 
@@ -12,8 +13,11 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
   graterValue,
   total,
 }) => {
+  const handle_Average = () => {
+    window.history.pushState({}, "", `/order?order_status=${"delivered"}`);
+  };
   return (
-    <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#8AEFD1] bg-[#4FC9F333] border  rounded-2xl ">
+    <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#8AEFD1] bg-[#4fc9f333] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl ">
       <div className="w-[112px] h-[111px]">
         <DougnatAverage
           total={total}
@@ -21,7 +25,7 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
           graterValue={graterValue}
         />
       </div>
-      <div className="h-[111px] w-[243px] ">
+      <div onClick={handle_Average} className="h-[111px] w-[243px] ">
         <span className="text-[18px] font-[600px]">Average Order Size</span>
         <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
           <div className="flex items-center gap-10">
