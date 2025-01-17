@@ -1,3 +1,4 @@
+"use client";
 import DeliveredOrder from "@/components/DeliveredOrder";
 import React from "react";
 
@@ -12,8 +13,14 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
   graterValue,
   total,
 }) => {
+  const handle_delivered = () => {
+    window.history.pushState({}, "", `/order?order_status=${"delivered"}`);
+  };
   return (
-    <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#a4f394] bg-[#45e48733] border  rounded-2xl ">
+    <div
+      onClick={handle_delivered}
+      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#a4f394] bg-[#45e48733] border  rounded-2xl "
+    >
       <div className="w-[112px] h-[111px]">
         <DeliveredOrder
           graterValue={graterValue}

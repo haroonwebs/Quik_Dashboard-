@@ -133,9 +133,27 @@ export const OrdersByStatus = async (
   try {
     const orderRepositery = AppDataSource.getRepository(Order);
     const { status } = req.query as any;
-    const orders = await orderRepositery.find({
-      where: { order_status: status },
-    });
+
+    let orders;
+    if (status === "live_orders") {
+      // Fetch orders for multiple statuses
+      orders = await orderRepositery.find({
+        where: {
+          order_status: In([
+            "pickup awaiting",
+            "pickedup",
+            "warehouse",
+            "delivery attempt tried",
+          ]),
+        },
+      });
+    } else {
+      // Fetch orders for a single status
+      orders = await orderRepositery.find({
+        where: { order_status: status },
+      });
+    }
+
     const orderCount = orders.length;
     if (!orders) {
       return res.status(404).json({

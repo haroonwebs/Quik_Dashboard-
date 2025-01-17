@@ -1,0 +1,85 @@
+"use client";
+import { useEffect, useState } from "react";
+import React from "react";
+import MyBarChart from "./MyBarChart";
+import { useSearchParams } from "next/navigation";
+import fetchById from "@/hooks/useFetchByStatus";
+import { ordertypes } from "@/types/ordertypes";
+
+const BarChart = () => {
+  const [status, setStatus] = useState<string | null>(null);
+  const [orders, setOrders] = useState<ordertypes[]>([]);
+  const [error, setError] = useState<any | null>(null);
+  const [timePeriod, setTimePeriod] = useState("month");
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const status = searchParams?.get("order_status");
+    setStatus(status);
+    console.log("status", status);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (status) {
+      const fetchOrders = async () => {
+        const { orders, error } = await fetchById(
+          `http://localhost:4000/api/v1/orders/status?status=${status}`
+        );
+        if (error) {
+          setError(error);
+        } else {
+          setOrders(orders || []);
+        }
+      };
+
+      fetchOrders();
+    }
+  }, [status]);
+  //  finding orders whose value grater then 1000
+  const graterValue = Array.isArray(orders)
+    ? orders.filter((order) => order.order_value >= 1000)
+    : [];
+  //  finding orders whose value less then 1000
+  const lessValue = Array.isArray(orders)
+    ? orders.filter((order) => order.order_value < 1000)
+    : [];
+
+  return (
+    <div className=" flex flex-col justify-center items-center w-[810px] h-[650px] border border-[#EFF2F5] rounded-md">
+      <div className=" flex justify-between items-center w-[768px] h-[80px] ">
+        <div className="flex gap-2">
+          <img src="/images/Vector(3).png" alt="" />
+          <span className="text-[14px] font-[500px]">Live Order</span>
+        </div>
+        <div className="flex justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
+          <button
+            onClick={() => setTimePeriod("day")}
+            className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px] ] rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white"
+          >
+            Today
+          </button>
+          <button
+            onClick={() => setTimePeriod("week")}
+            className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px]  rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white "
+          >
+            This week
+          </button>
+          <button
+            onClick={() => setTimePeriod("month")}
+            className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px]  rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white "
+          >
+            This Month
+          </button>
+        </div>
+      </div>
+      <div className="flex justify-center items-end w-[768px] h-[540px] ">
+        <MyBarChart
+          less={lessValue}
+          grater={graterValue}
+          timePeriod={timePeriod}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default BarChart;

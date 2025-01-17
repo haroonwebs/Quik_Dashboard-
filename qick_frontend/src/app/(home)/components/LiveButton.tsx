@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import DougnatLive from "@/components/DougnatLive";
 
@@ -12,8 +13,15 @@ const LiveButton: React.FC<LiveButtonProps> = ({
   lessValue,
   graterValue,
 }) => {
+  const handle_LiveUrl = () => {
+    window.history.pushState({}, "", `/order?order_status=${"live_orders"}`);
+  };
+
   return (
-    <div className=" flex items-center shadow-md justify-center gap-2  w-[406px] h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#9dc1ce33] border  rounded-2xl mt-6">
+    <div
+      onClick={handle_LiveUrl}
+      className=" flex items-center shadow-md justify-center gap-2  w-[406px] h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#9dc1ce33] border  rounded-2xl mt-6"
+    >
       <div className="w-[112px] h-[111px]">
         <DougnatLive
           graterValue={graterValue}

@@ -1,6 +1,3 @@
-import DougnatAverage from "@/components/DougnatAverage";
-import DeliveredOrder from "@/components/DeliveredOrder";
-import MyBarChart from "./(home)/components/MyBarChart";
 import usefetchOrders from "@/hooks/usefetchOrders";
 import { ordertypes } from "@/types/ordertypes";
 import LiveButton from "./(home)/components/LiveButton";
@@ -8,6 +5,7 @@ import Link from "next/link";
 import DelayButton from "./(home)/components/DelayButton";
 import AverageButton from "./(home)/components/AverageButton";
 import DeliveredButton from "./(home)/components/DeliveredButton";
+import BarChart from "./(home)/components/BarChart";
 
 export default async function Home() {
   // used usefetchOrders hook to fetch all orders from the database
@@ -73,6 +71,7 @@ export default async function Home() {
           "warehouse",
           "delivery attempt tried",
           "delivered",
+          "delayed",
         ].includes(order.order_status)
       )
     : [];
@@ -92,8 +91,6 @@ export default async function Home() {
         .length
     : [];
 
-  console.log("graterValueAverage", graterValueAverage);
-  console.log("lessValueAverage", lessValueAverage);
   // average value of orders
   const averageOrderValue = Math.floor(totalValue / totalOrdersCount);
 
@@ -127,28 +124,7 @@ export default async function Home() {
           </div>
           {/* graph section */}
 
-          <div className=" flex flex-col justify-center items-center w-[810px] h-[650px] border border-[#EFF2F5] rounded-md">
-            <div className=" flex justify-between items-center w-[768px] h-[80px] ">
-              <div className="flex gap-2">
-                <img src="/images/Vector(3).png" alt="" />
-                <span className="text-[14px] font-[500px]">Live Order</span>
-              </div>
-              <div className="flex justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
-                <button className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px] ] rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white">
-                  Today
-                </button>
-                <button className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px]  rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white ">
-                  This week
-                </button>
-                <button className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px]  rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white ">
-                  This Month
-                </button>
-              </div>
-            </div>
-            <div className="flex justify-center items-end w-[768px] h-[540px] ">
-              <MyBarChart />
-            </div>
-          </div>
+          <BarChart />
         </div>
         {/* sidebar code
          */}

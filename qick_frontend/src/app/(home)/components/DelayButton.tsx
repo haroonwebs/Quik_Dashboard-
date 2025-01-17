@@ -1,3 +1,4 @@
+"use client";
 import DougnatDelay from "@/components/DougnatDelay";
 import React from "react";
 
@@ -12,8 +13,14 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
   graterValue,
   total,
 }) => {
+  const handle_delay = () => {
+    window.history.pushState({}, "", `/order?order_status=${"delayed"}`);
+  };
   return (
-    <div className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#FFB5B5] bg-[#FAFAFA] border  rounded-2xl">
+    <div
+      onClick={handle_delay}
+      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#FFB5B5] bg-[#FAFAFA] border  rounded-2xl"
+    >
       <div className="w-[112px] h-[111px]">
         <DougnatDelay
           graterValue={graterValue}
