@@ -155,7 +155,7 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
           display: false, // Enable grid lines for the y-axis
         },
         min: 0, // Set the minimum value of the y-axis
-        max: 120, // Set the maximum value of the y-axis to accommodate stacked values
+        max: 160, // Set the maximum value of the y-axis to accommodate stacked values
         ticks: {
           stepSize: 20, // Set the step size for the y-axis ticks
         },
