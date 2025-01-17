@@ -135,6 +135,7 @@ export const OrdersByStatus = async (
     const { status } = req.query as any;
 
     let orders;
+
     if (status === "live_orders") {
       // Fetch orders for multiple statuses
       orders = await orderRepositery.find({
@@ -147,11 +148,13 @@ export const OrdersByStatus = async (
           ]),
         },
       });
-    } else {
+    } else if (["delivered", "delayed"].includes(status)) {
       // Fetch orders for a single status
       orders = await orderRepositery.find({
         where: { order_status: status },
       });
+    } else {
+      orders = await orderRepositery.find();
     }
 
     const orderCount = orders.length;
