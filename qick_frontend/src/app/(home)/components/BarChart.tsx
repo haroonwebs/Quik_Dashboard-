@@ -7,7 +7,7 @@ import fetchById from "@/hooks/useFetchByStatus";
 import { ordertypes } from "@/types/ordertypes";
 
 const BarChart = () => {
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>("live_orders");
   const [orders, setOrders] = useState<ordertypes[]>([]);
   const [error, setError] = useState<any | null>(null);
   const [timePeriod, setTimePeriod] = useState("month");
@@ -16,7 +16,7 @@ const BarChart = () => {
     const status = searchParams?.get("order_status");
     setStatus(status);
     console.log("status", status);
-  }, [searchParams]);
+  }, [searchParams, status]);
 
   useEffect(() => {
     if (status) {
@@ -36,16 +36,16 @@ const BarChart = () => {
   }, [status]);
   //  finding orders whose value grater then 1000
   const graterValue = Array.isArray(orders)
-    ? orders.filter((order) => order.order_value >= 1000)
+    ? orders.filter((order) => order.order_value >= 1000).length
     : [];
   //  finding orders whose value less then 1000
   const lessValue = Array.isArray(orders)
-    ? orders.filter((order) => order.order_value < 1000)
+    ? orders.filter((order) => order.order_value < 1000).length
     : [];
 
   return (
-    <div className=" flex flex-col justify-center items-center w-[810px] h-[650px] border border-[#EFF2F5] rounded-md">
-      <div className=" flex justify-between items-center w-[768px] h-[80px] ">
+    <div className=" flex flex-col justify-center items-center w-[900px] h-[650px] border border-[#EFF2F5] rounded-md">
+      <div className=" flex justify-between items-center w-[850px] h-[80px] ">
         <div className="flex gap-2">
           <img src="/images/Vector(3).png" alt="" />
           <span className="text-[14px] font-[500px]">Live Order</span>
@@ -71,7 +71,7 @@ const BarChart = () => {
           </button>
         </div>
       </div>
-      <div className="flex justify-center items-end w-[768px] h-[540px] ">
+      <div className="flex justify-center items-end w-[850px] h-[620px] ">
         <MyBarChart
           less={lessValue}
           grater={graterValue}

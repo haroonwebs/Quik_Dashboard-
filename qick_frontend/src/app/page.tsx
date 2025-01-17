@@ -98,7 +98,7 @@ export default async function Home() {
     <section className="bg-[#F5F8FA] min-h-100">
       <main className="w-full h-auto flex justify-center gap-8 mt-4 shadow-md">
         <div className=" flex flex-col justify-center items-center w-[950px] h-[800px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className="flex justify-between items-center px-14 h-[100px] w-full">
+          <div className="flex justify-between items-center px-2 h-[100px] w-full">
             <div className="flex flex-col px-4">
               <span className="text-[20px] font-[600px]">
                 Orders Statistics

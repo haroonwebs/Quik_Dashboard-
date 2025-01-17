@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { ordertypes } from "@/types/ordertypes";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,16 +22,17 @@ ChartJS.register(
   Legend
 );
 interface MyCharProp {
-  less: ordertypes[];
-  grater: ordertypes[];
-  timePeriod: string;
+  less: number | never[];
+  grater: number | never[];
+  timePeriod: string | never[];
 }
 
 const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
   const generateFilteredData = () => {
     const today = new Date("2025-01-17");
     let labels = [];
-    let data = [];
+    let data_1 = [];
+    let data_2 = [];
 
     if (timePeriod === "month") {
       const monthNames = [
@@ -57,7 +57,8 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
 
       for (let day = 1; day <= daysInMonth; day++) {
         labels.push(`${monthNames[today.getMonth()]} ${day}`);
-        data.push(Math.floor(Math.random() * 100)); // Replace with actual data
+        data_1.push(grater); // Replace with actual data
+        data_2.push(less);
       }
     } else if (timePeriod === "week") {
       const startOfWeek = new Date(today);
@@ -67,39 +68,35 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
         const currentDay = new Date(startOfWeek);
         currentDay.setDate(startOfWeek.getDate() + i);
         labels.push(currentDay.toDateString());
-        data.push(Math.floor(Math.random() * 100)); // Replace with actual data
+        data_1.push(grater); // Replace with actual data
+        data_2.push(less);
       }
     } else if (timePeriod === "day") {
       labels.push(today.toDateString());
-      data.push(Math.floor(Math.random() * 100)); // Replace with actual data
+      data_1.push(grater); // Replace with actual data
+      data_2.push(less);
     }
 
-    return { labels, data };
+    return { labels, data_1, data_2 };
   };
 
-  const { labels, data } = generateFilteredData();
+  const { labels, data_1, data_2 } = generateFilteredData();
 
   const chartTata = {
     labels,
     datasets: [
       {
         label: "Dataset 1",
-        data: [
-          65, 59, 80, 81, 56, 55, 40, 70, 90, 100, 60, 50, 30, 20, 10, 5, 15,
-          25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125, 135, 123, 434,
-        ],
-        backgroundColor: "rgba(28, 58, 106, 1)",
+        data: data_2,
+        backgroundColor: "rgba(79, 201, 243, 1)",
         borderColor: "rgba(28, 58, 106, 1)",
         borderWidth: 0,
         stack: "Stack 0",
       },
       {
         label: "Dataset 2",
-        data: [
-          30, 20, 40, 50, 30, 25, 20, 15, 10, 5, 15, 25, 35, 45, 55, 65, 75, 85,
-          95, 105, 115, 125, 135, 145, 155, 165, 175, 185, 195, 234, 432,
-        ],
-        backgroundColor: "rgba(79, 201, 243, 1)",
+        data: data_1,
+        backgroundColor: "rgba(28, 58, 106, 1)",
         borderColor: "rgba(79, 201, 243, 1)",
         borderWidth: 0,
         borderRadius: 10,
@@ -126,16 +123,16 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
           display: false, // Enable grid lines for the y-axis
         },
         min: 0, // Set the minimum value of the y-axis
-        max: 300, // Set the maximum value of the y-axis to accommodate stacked values
+        max: 120, // Set the maximum value of the y-axis to accommodate stacked values
         ticks: {
-          stepSize: 10, // Set the step size for the y-axis ticks
+          stepSize: 20, // Set the step size for the y-axis ticks
         },
         stacked: true, // Enable stacking on the y-axis
       },
     },
   };
 
-  return <Bar data={chartTata} options={options} height={210} />;
+  return <Bar data={chartTata} options={options} height={200} />;
 };
 
 export default MyBarChart;
