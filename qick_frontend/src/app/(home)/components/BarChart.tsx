@@ -44,13 +44,13 @@ const BarChart = () => {
     : [];
 
   return (
-    <div className=" flex flex-col justify-center items-center w-[900px] h-[650px] border border-[#EFF2F5] rounded-md">
-      <div className=" flex justify-between items-center w-[850px] h-[80px] ">
-        <div className="flex gap-2">
+    <div className=" flex flex-col justify-center items-center w-full md:w-[900px] h-full md:h-[650px] border border-[#EFF2F5] rounded-md">
+      <div className=" flex justify-between items-center w-full md:w-[850px] h-full md:h-[80px] ">
+        <div className="flex mb-2 md:mb-0 mt-2 md:mt-0 gap-2 ">
           <img src="/images/Vector(3).png" alt="" />
           <span className="text-[14px] font-[500px]">Live Order</span>
         </div>
-        <div className="flex justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
+        <div className="md:flex hidden justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
           <button
             onClick={() => setTimePeriod("day")}
             className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px] ] rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white"
@@ -71,7 +71,7 @@ const BarChart = () => {
           </button>
         </div>
       </div>
-      <div className="flex justify-center items-end w-[850px] h-[620px] ">
+      <div className="flex justify-center items-end w-full md:w-[850px] h-full md:h-[620px] ">
         <MyBarChart
           less={lessValue}
           grater={graterValue}

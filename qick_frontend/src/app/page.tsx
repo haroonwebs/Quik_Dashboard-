@@ -96,26 +96,34 @@ export default async function Home() {
 
   return (
     <section className="bg-[#F5F8FA] min-h-100">
-      <main className="w-full h-auto flex justify-center gap-8 mt-4 shadow-md">
-        <div className=" flex flex-col justify-center items-center w-[950px] h-[800px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className="flex justify-between items-center px-2 h-[100px] w-full">
+      <main className="w-full h-auto flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-4 shadow-md">
+        <div className="flex flex-col justify-center items-center w-full md:w-[950px] h-auto md:h-[800px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
+          <div className="flex flex-col md:flex-row justify-between items-center px-2 h-auto md:h-[100px] w-full">
             <div className="flex flex-col px-4">
-              <span className="text-[20px] font-[600px]">
+              <span className="text-[16px] md:text-[20px] font-semibold">
                 Orders Statistics
               </span>
-              <span className="text-[#7E8299] text-[12px] font-[500px]">
+              <span className="text-[#7E8299] text-[12px] font-medium">
                 Last updated: Oct 10 at 4:00 PM
               </span>
             </div>
-            <div className="flex w-[354px] h-[45px] gap-2">
-              <div className="flex justify-evenly items-center bg-[#FAFAFA] w-[164px] h-[44px] rounded-lg">
-                <img src="/images/Group 2022.png" alt="not found" />
-                <span className="text-[12px] font-[600px]">Total orders</span>
+            <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-2 w-full md:w-auto">
+              <div className="flex justify-between items-center bg-[#FAFAFA] w-full md:w-[164px] h-[44px] rounded-lg px-2">
+                <img
+                  src="/images/Group 2022.png"
+                  alt="not found"
+                  className="w-4 h-4"
+                />
+                <span className="text-[12px] font-semibold">Total orders</span>
                 <span>{totalOrders}</span>
               </div>
-              <div className="flex justify-evenly items-center bg-[#FAFAFA] w-[164px] h-[44px] rounded-lg">
-                <img src="/images/Vector(2).png" alt="not found" />
-                <span className="text-[12px] font-[600px]">
+              <div className="flex justify-between items-center bg-[#FAFAFA] w-full md:w-[164px] h-[44px] rounded-lg px-2">
+                <img
+                  src="/images/Vector(2).png"
+                  alt="not found"
+                  className="w-4 h-4"
+                />
+                <span className="text-[12px] font-semibold">
                   Delivered orders
                 </span>
                 <span>{Delivered_Orders?.length}</span>
@@ -123,15 +131,12 @@ export default async function Home() {
             </div>
           </div>
           {/* graph section */}
-
           <BarChart />
         </div>
-        {/* sidebar code
-         */}
-        <div className=" flex flex-col shadow-lg  items-center w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className=" flex items-center justify-center  w-[406px] h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
-            <div className=" flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md bg-[#4FC9F3] hover:cursor-pointer hover:bg-white hover:border-none transition">
-              {" "}
+
+        <div className="flex flex-col shadow-lg items-center w-full md:w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px]">
+          <div className="flex flex-wrap justify-center items-center w-full md:w-[406px] h-auto md:h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
+            <div className="flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md bg-[#4FC9F3] hover:cursor-pointer hover:bg-white hover:border-none transition">
               <img
                 className="w-4 h-3 bg-[#5E6278]"
                 src="/images/Vector.png"
@@ -141,10 +146,9 @@ export default async function Home() {
                 <span>Orders</span>
               </Link>
             </div>
-            <div className=" flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md hover:cursor-pointer ">
-              {" "}
+            <div className="flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md hover:cursor-pointer">
               <img
-                className="w-4 h-3 ]"
+                className="w-4 h-3"
                 src="/images/Vector(1).png"
                 alt="orders"
               />
@@ -153,66 +157,62 @@ export default async function Home() {
               </Link>
             </div>
           </div>
-          {/* selectbox */}
-          <div className=" flex  justify-end w-[406px] h-[47px] gap-3  ">
+
+          <div className="flex flex-wrap justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-3">
             <span>Order Status</span>
-            <div className="w-[300px] h-[35px] border border-[#EFF2F5] rounded-md ">
+            <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md">
               <select
-                className="w-[275px] h-[35px] text-[#7E8299] font-[500px] bg-transparent outline-none px-2"
+                className="w-full md:w-[275px] h-[35px] text-[#7E8299] font-[500px] bg-transparent outline-none px-2"
                 name=""
                 id=""
               >
-                <option value="select" className=" p-3 ">
+                <option value="select" className="p-3">
                   select
                 </option>
-                <option value="select" className=" p-3 ">
-                  Pickup Awaitng
+                <option value="select" className="p-3">
+                  Pickup Awaiting
                 </option>
-                <option value="select" className=" p-3 ">
+                <option value="select" className="p-3">
                   Picked Up
                 </option>
-                <option value="select" className=" p-3 ">
+                <option value="select" className="p-3">
                   Reached Warehouse
                 </option>
-                <option value="select" className=" p-3 ">
+                <option value="select" className="p-3">
                   Delivery attempt tried
                 </option>
-                <option value="select" className=" p-3 ">
+                <option value="select" className="p-3">
                   Delivered
                 </option>
               </select>
             </div>
           </div>
-          {/* date range */}
-          <div className=" flex  justify-end w-[406px] h-[47px] gap-4  ">
+
+          <div className="flex flex-wrap justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-4">
             <span>Date Range</span>
-            <div className="w-[300px] h-[35px] border border-[#EFF2F5] rounded-md px-2">
+            <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md px-2">
               <input
                 type="Date"
-                className="w-[275px] h-[35px] text-[#7E8299]  bg-transparent outline-none px-2"
-              ></input>
+                className="w-full md:w-[275px] h-[35px] text-[#7E8299] bg-transparent outline-none px-2"
+              />
             </div>
           </div>
 
-          {/* dougnat graphs for live orders */}
           <LiveButton
             graterValue={graterValueLive}
             total={totalLive}
             lessValue={lessValueLive}
           />
-          {/* dougnat graphs for delayed orders */}
           <DelayButton
             graterValue={graterValueDelay}
             lessValue={lessValueDelay}
             total={totalDelay}
           />
-          {/* dougnat graphs for average order size  */}
           <AverageButton
             total={averageOrderValue}
             lessValue={lessValueAverage}
             graterValue={graterValueAverage}
           />
-          {/* dougnat graphs for delivered */}
           <DeliveredButton
             graterValue={graterValueDelivered}
             lessValue={lessValueDelivered}

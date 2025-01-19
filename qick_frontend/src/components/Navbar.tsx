@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,13 +24,21 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#FFFFFF] w-full flex justify-between items-center px-10  min-h-16 shadow-sm">
-      <div className="w-[50%] flex gap-8">
-        <div className="w-[80px] h-[28px]">
+    <nav className="bg-[#FFFFFF] w-full flex justify-between items-center px-4 lg:px-10  min-h-16 shadow-sm">
+      <div className="w-[50%]  flex gap-8">
+        <div className=" flex w-[80px] h-[28px] gap-2">
+          <Image
+            className="flex md:hidden"
+            src="/images/Group 1923.png" // Path to your image
+            alt="img no found "
+            width={20}
+            height={20}
+            layout="responsive" // Optional: can be 'fixed', 'intrinsic', 'responsive', or 'fill'
+          />
           <img src="/images/Group.png" alt="Not found" />
         </div>
 
-        <ul className="flex gap-6 font-[400px] text-[#7E8299]">
+        <ul className="md:flex hidden gap-6 font-[400px] text-[#7E8299] ">
           <li className="hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
             Dashboard
           </li>
