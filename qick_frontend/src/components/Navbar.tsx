@@ -39,20 +39,26 @@ const Navbar = () => {
         </div>
 
         <ul className="md:flex hidden gap-6 font-[400px] text-[#7E8299] ">
-          <li className="hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-            Dashboard
-          </li>
-          <li className="hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-            Users
-          </li>
           <Link href="/">
-            <li className="hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+            <li className=" flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+              Dashboard
+            </li>
+          </Link>
+          <Link href="/">
+            <li className=" flex justify-center items-center  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+              Users
+            </li>
+          </Link>
+          <Link href="/">
+            <li className=" flex justify-center items-center  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
               Orders
             </li>
           </Link>
-          <li className="hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-            Buyers
-          </li>
+          <Link href="/">
+            <li className="flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+              Buyers
+            </li>
+          </Link>
           <li
             className="relative hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md"
             onMouseEnter={handleMouseEnter}

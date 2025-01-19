@@ -8,3 +8,24 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #f5f8fa;
 }
+
+/* .custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-dropdown select {
+  appearance: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 30px; 
+}
+
+.custom-dropdown::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; 
+} */

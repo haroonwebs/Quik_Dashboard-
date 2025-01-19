@@ -20,22 +20,24 @@ const LiveButton: React.FC<LiveButtonProps> = ({
   return (
     <div
       onClick={handle_LiveUrl}
-      className="flex flex-col md:flex-row items-center shadow-md justify-center gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-6"
+      className="flex flex-col md:flex-row items-center shadow-md justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-3"
     >
-      <span className="text-[18px] font-[600px]">Live Orders</span>
+      <span className="md:hidden pr-48 text-[18px] font-[600px]">
+        Live Orders
+      </span>
 
-      <div className="w-[112px] h-[111px]">
+      <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
         <DougnatLive
           graterValue={graterValue}
           total={total}
           lessValue={lessValue}
         />
       </div>
-      <div className="h-[111px] w-[243px] ">
+      <div className="h-[111px] w-[243px] mt-5">
         <span className="hidden md:block text-[18px] font-[600px]">
           Live Orders
         </span>
-        <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
+        <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white md:mt-3 rounded-md">
           <div className="flex items-center gap-10">
             <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
               <img

@@ -19,18 +19,24 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
   return (
     <div
       onClick={handle_delivered}
-      className=" flex items-center justify-center shadow-md gap-2  w-[406px] h-[162px] border-[#a4f394] bg-[#45e48733] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl "
+      className="flex flex-col md:flex-row items-center shadow-md justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] border-[#a4f394] bg-[#45e48733] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-3"
     >
-      <div className="w-[112px] h-[111px]">
+      <span className="md:hidden pr-40 text-[18px] font-[600px]">
+        Delivered Orders
+      </span>
+
+      <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
         <DeliveredOrder
           graterValue={graterValue}
           lessValue={lessValue}
           total={total}
         />
       </div>
-      <div className="h-[111px] w-[243px] ">
-        <span className="text-[18px] font-[600px]">Delivered Orders</span>
-        <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white mt-3 rounded-md">
+      <div className="h-[111px] w-[243px] mt-5">
+        <span className="hidden md:block text-[18px] font-[600px]">
+          Delivered Orders
+        </span>
+        <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white md:mt-3 rounded-md">
           <div className="flex items-center gap-10">
             <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
               <div className="w-[7px] h-[7px] bg-[#1fe070] rounded"></div>

@@ -99,7 +99,7 @@ export default async function Home() {
       <main className="w-full h-auto flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-4 shadow-md">
         <div className="flex flex-col justify-center items-center w-full md:w-[950px] h-auto md:h-[800px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
           <div className="flex flex-col md:flex-row justify-between items-center px-2 h-auto md:h-[100px] w-full">
-            <div className="flex flex-col px-4">
+            <div className="flex  flex-col px-4 pr-60 md:pr-0">
               <span className="text-[16px] md:text-[20px] font-semibold">
                 Orders Statistics
               </span>
@@ -107,7 +107,7 @@ export default async function Home() {
                 Last updated: Oct 10 at 4:00 PM
               </span>
             </div>
-            <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-2 w-full md:w-auto">
+            <div className="flex md:flex-nowrap justify-center items-center gap-2 w-full md:w-[400px] ">
               <div className="flex justify-between items-center bg-[#FAFAFA] w-full md:w-[164px] h-[44px] rounded-lg px-2">
                 <img
                   src="/images/Group 2022.png"
@@ -135,21 +135,21 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col shadow-lg items-center w-full md:w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className="flex flex-wrap justify-center items-center w-full md:w-[406px] h-auto md:h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
+          <div className="flex  justify-center items-center w-full md:w-[406px] h-auto md:h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
             <div className="flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md bg-[#4FC9F3] hover:cursor-pointer hover:bg-white hover:border-none transition">
               <img
-                className="w-4 h-3 bg-[#5E6278]"
-                src="/images/Vector.png"
+                className="w-4 h-3  hover:text-black "
+                src="/images/Group 981.png"
                 alt="orders"
               />
               <Link href="/">
-                <span>Orders</span>
+                <span className="text-[#FFFFFF] hover:text-black ">Orders</span>
               </Link>
             </div>
             <div className="flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md hover:cursor-pointer">
               <img
-                className="w-4 h-3"
-                src="/images/Vector(1).png"
+                className="w-4 h-3 text-[#5E6278]"
+                src="/images/Group 984.png"
                 alt="orders"
               />
               <Link href="/payouts">
@@ -158,37 +158,37 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-3">
+          <div className="flex flex-col md:flex-row justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 mt-3 px-4 md:px-0">
             <span>Order Status</span>
             <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md">
               <select
-                className="w-full md:w-[275px] h-[35px] text-[#7E8299] font-[500px] bg-transparent outline-none px-2"
+                className="w-full md:w-[275px] h-[35px] text-[#7E8299] font-[500px] bg-transparent outline-none  px-2"
                 name=""
                 id=""
               >
-                <option value="select" className="p-3">
+                <option value="select" className="p-3 ">
                   select
                 </option>
-                <option value="select" className="p-3">
+                <option value="select" className="p-3 ">
                   Pickup Awaiting
                 </option>
-                <option value="select" className="p-3">
+                <option value="select" className="p-3 ">
                   Picked Up
                 </option>
-                <option value="select" className="p-3">
+                <option value="select" className="p-3 ">
                   Reached Warehouse
                 </option>
-                <option value="select" className="p-3">
+                <option value="select" className="p-3 ">
                   Delivery attempt tried
                 </option>
-                <option value="select" className="p-3">
+                <option value="select" className="p-3 ">
                   Delivered
                 </option>
               </select>
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-4">
+          <div className="flex flex-col md:flex-row  justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 px-4 md:px-0">
             <span>Date Range</span>
             <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md px-2">
               <input
