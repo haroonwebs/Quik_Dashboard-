@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import DougnatAverage from "@/components/DougnatAverage";
+import { ordertypes } from "@/types/ordertypes";
 
 interface DougnatAverageProps {
-  lessValue: number | never[];
-  graterValue: number | never[];
+  lessValue: ordertypes[] | never[];
+  graterValue: ordertypes[] | never[];
   total: number;
 }
 
@@ -28,8 +29,8 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
       <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
         <DougnatAverage
           total={total}
-          lessValue={lessValue}
-          graterValue={graterValue}
+          lessValue={lessValue.length}
+          graterValue={graterValue.length}
         />
       </div>
       <div className="h-[111px] w-[243px] mt-5">
@@ -47,7 +48,7 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
               <span>Value &lt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {lessValue} orders
+              {lessValue.length} orders
             </div>
           </div>
           <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
@@ -61,7 +62,7 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
               <span>Value &gt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {graterValue} orders
+              {graterValue.length} orders
             </div>
           </div>
         </div>

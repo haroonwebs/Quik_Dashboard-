@@ -36,11 +36,11 @@ const BarChart = () => {
   }, [status]);
   //  finding orders whose value grater then 1000
   const graterValue = Array.isArray(orders)
-    ? orders.filter((order) => order.order_value >= 1000).length
+    ? orders?.filter((order) => order?.order_value >= 1000)
     : [];
   //  finding orders whose value less then 1000
   const lessValue = Array.isArray(orders)
-    ? orders.filter((order) => order.order_value < 1000).length
+    ? orders?.filter((order) => order?.order_value < 1000)
     : [];
 
   return (
@@ -54,7 +54,7 @@ const BarChart = () => {
           {/* Select Box for Mobile */}
           <select
             value={timePeriod}
-            onChange={(e) => setTimePeriod(e.target.value)}
+            onChange={(e) => setTimePeriod(e.target?.value)}
             className="md:hidden rounded-md border border-[#EFF2F5] w-[109px] h-[29px] text-[#5E6278] text-[9px] font-[600px] outline-none bg-transparent"
           >
             <option value="day">Today</option>
@@ -87,8 +87,8 @@ const BarChart = () => {
       </div>
       <div className="flex justify-center items-end w-full md:w-[850px] h-full md:h-[620px] ">
         <MyBarChart
-          less={lessValue}
-          grater={graterValue}
+          lessValueOrders={lessValue}
+          graterValueOrders={graterValue}
           timePeriod={timePeriod}
         />
       </div>

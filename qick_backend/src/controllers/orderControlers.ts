@@ -6,6 +6,7 @@ import { Order } from "../models /ordersModel";
 import { In } from "typeorm";
 
 const orderSchemma = Joi.object({
+  created_at: Joi.date(),
   order_name: Joi.string().min(4).required(),
   order_description: Joi.string().min(10).max(1000).required(),
   order_value: Joi.number().min(10).required(),
@@ -38,15 +39,16 @@ export const generate_Order = async (
       order_value,
       order_status,
       delivery_date,
+      created_at,
     }: ordertypes = value;
 
-    const currentDate = new Date();
-    if (new Date(delivery_date) < currentDate) {
-      return res.status(400).json({
-        success: false,
-        message: "Delivery date cannot be in the past.",
-      });
-    }
+    // const currentDate = new Date();
+    // if (new Date(delivery_date) < currentDate) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Delivery date cannot be in the past.",
+    //   });
+    // }
     const orderRepositery = AppDataSource.getRepository(Order);
     const neworder = orderRepositery.create({
       order_name,
@@ -54,6 +56,7 @@ export const generate_Order = async (
       order_value,
       order_status,
       delivery_date,
+      created_at,
     });
 
     if (!neworder) {
@@ -148,7 +151,16 @@ export const OrdersByStatus = async (
           ]),
         },
       });
-    } else if (["delivered", "delayed"].includes(status)) {
+    } else if (
+      [
+        "delivered",
+        "delayed",
+        "pickedup",
+        "warehouse",
+        "delivery attempt tried",
+        "pickup awaiting",
+      ].includes(status)
+    ) {
       // Fetch orders for a single status
       orders = await orderRepositery.find({
         where: { order_status: status },

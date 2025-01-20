@@ -37,7 +37,10 @@ export class Order {
   })
   order_status: string | undefined;
 
-  @CreateDateColumn({ type: "timestamp" })
+  // @CreateDateColumn({ type: "timestamp" })
+  // created_at!: Date;
+
+  @Column({ type: "timestamp" })
   created_at!: Date;
 
   @UpdateDateColumn({ type: "timestamp" })

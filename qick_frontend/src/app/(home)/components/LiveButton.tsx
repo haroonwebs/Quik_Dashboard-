@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import DougnatLive from "@/components/DougnatLive";
+import { ordertypes } from "@/types/ordertypes";
 
 interface LiveButtonProps {
-  lessValue: number | never[];
-  graterValue: number | never[];
+  lessValue: ordertypes[] | never[];
+  graterValue: ordertypes[] | never[];
   total: number;
 }
 
@@ -28,9 +29,9 @@ const LiveButton: React.FC<LiveButtonProps> = ({
 
       <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
         <DougnatLive
-          graterValue={graterValue}
+          graterValue={graterValue.length}
           total={total}
-          lessValue={lessValue}
+          lessValue={lessValue.length}
         />
       </div>
       <div className="h-[111px] w-[243px] mt-5">
@@ -48,7 +49,7 @@ const LiveButton: React.FC<LiveButtonProps> = ({
               <span>Value &lt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {graterValue} orders
+              {graterValue.length} orders
             </div>
           </div>
           <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
@@ -62,7 +63,7 @@ const LiveButton: React.FC<LiveButtonProps> = ({
               <span>Value &gt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {lessValue} orders
+              {lessValue.length} orders
             </div>
           </div>
         </div>

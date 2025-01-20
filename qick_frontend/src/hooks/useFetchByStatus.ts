@@ -6,8 +6,8 @@ const fetchById = async (url: string) => {
     if (!data) {
       throw new Error("error while fetching orders");
     }
-    const response: any = await data.json();
-    const orders: ordertypes[] = response.orders;
+    const response: any = await data?.json();
+    const orders: ordertypes[] = response?.orders;
     return { orders, error: null };
   } catch (error: any) {
     return { orders: null, error: error.message };

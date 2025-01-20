@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { ordertypes } from "@/types/ordertypes";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-// Register the necessary components
+// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,27 +23,47 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
 interface MyCharProp {
-  less: number | never[];
-  grater: number | never[];
+  lessValueOrders: ordertypes[] | never[];
+  graterValueOrders: ordertypes[] | never[];
   timePeriod: string | never[];
 }
 
-const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
-  const [status, setStatus] = useState<string | null>("live_orders");
-
+const MyBarChart: React.FC<MyCharProp> = ({
+  lessValueOrders,
+  graterValueOrders,
+  timePeriod,
+}) => {
+  const [status, setStatus] = useState<string | null>(null);
   const searchParams = useSearchParams();
+  const [chartData, setChartData] = useState<{
+    labels: string[];
+    data_1: number[];
+    data_2: number[];
+  }>({
+    labels: [],
+    data_1: [],
+    data_2: [],
+  });
+
   useEffect(() => {
-    const status = searchParams?.get("order_status");
-    setStatus(status);
-    console.log("status", status);
-  }, [searchParams, status]);
+    const statusParam = searchParams?.get("order_status");
+    setStatus(statusParam);
+    console.log("status", statusParam);
+  }, [searchParams]);
+
+  useEffect(() => {
+    // Call the function to generate filtered data and set it to the chartData state
+    const { labels, data_1, data_2 } = generateFilteredData();
+    setChartData({ labels, data_1, data_2 });
+  }, [lessValueOrders, graterValueOrders, timePeriod]);
 
   const generateFilteredData = () => {
     const today = new Date();
-    let labels = [];
-    let data_1 = [];
-    let data_2 = [];
+    let labels: string[] = [];
+    let data_1: number[] = [];
+    let data_2: number[] = [];
 
     if (timePeriod === "month") {
       const monthNames = [
@@ -67,9 +87,25 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
       ).getDate();
 
       for (let day = 1; day <= daysInMonth; day++) {
-        labels.push(`${monthNames[today.getMonth()]} ${day}`);
-        data_1.push(grater); // Replace with actual data
-        data_2.push(less);
+        const dateLabel = `${monthNames[today.getMonth()]} ${day}`;
+        labels.push(dateLabel);
+
+        const dateKey = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          day
+        ).toLocaleDateString(); // Use local date string
+
+        const greaterCount = graterValueOrders.filter(
+          (order) => new Date(order.created_at).toLocaleDateString() === dateKey
+        ).length;
+
+        const lessCount = lessValueOrders.filter(
+          (order) => new Date(order.created_at).toLocaleDateString() === dateKey
+        ).length;
+
+        data_1.push(greaterCount);
+        data_2.push(lessCount);
       }
     } else if (timePeriod === "week") {
       const startOfWeek = new Date(today);
@@ -78,23 +114,48 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
       for (let i = 0; i < 7; i++) {
         const currentDay = new Date(startOfWeek);
         currentDay.setDate(startOfWeek.getDate() + i);
-        labels.push(currentDay.toDateString());
-        data_1.push(grater); // Replace with actual data
-        data_2.push(less);
+
+        const dateLabel = currentDay.toDateString(); // Example: "Sun Jan 14 2025"
+        labels.push(dateLabel);
+
+        const dateKey = currentDay.toLocaleDateString(); // Use local date string
+
+        const greaterCount = graterValueOrders.filter(
+          (order) => new Date(order.created_at).toLocaleDateString() === dateKey
+        ).length;
+
+        const lessCount = lessValueOrders.filter(
+          (order) => new Date(order.created_at).toLocaleDateString() === dateKey
+        ).length;
+
+        data_1.push(greaterCount);
+        data_2.push(lessCount);
       }
     } else if (timePeriod === "day") {
-      labels.push(today.toDateString());
-      data_1.push(grater); // Replace with actual data
-      data_2.push(less);
+      const dateLabel = today.toDateString();
+      labels.push(dateLabel);
+
+      const dateKey = today.toLocaleDateString(); // Use local date string
+
+      const greaterCount = graterValueOrders.filter(
+        (order) => new Date(order.created_at).toLocaleDateString() === dateKey
+      ).length;
+
+      const lessCount = lessValueOrders.filter(
+        (order) => new Date(order.created_at).toLocaleDateString() === dateKey
+      ).length;
+
+      data_1.push(greaterCount);
+      data_2.push(lessCount);
     }
 
     return { labels, data_1, data_2 };
   };
 
-  let datacolor1;
-  let datacolor2;
-  let bordercolor;
-  console.log("s", status);
+  let datacolor1: string;
+  let datacolor2: string;
+  let bordercolor: string;
+
   if (status === "average") {
     datacolor1 = "#639787";
     datacolor2 = "#8AEFD1";
@@ -112,26 +173,26 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
     datacolor2 = "rgba(28, 58, 106, 1)";
     bordercolor = "rgba(28, 58, 106, 1)";
   }
-  const { labels, data_1, data_2 } = generateFilteredData();
 
   const chartTData = {
-    labels,
+    labels: chartData.labels,
     datasets: [
       {
         label: "Dataset 1",
-        data: data_2,
+        data: chartData.data_2,
         backgroundColor: datacolor1,
         borderColor: bordercolor,
+        borderRadius: 10,
         borderWidth: 0,
         stack: "Stack 0",
       },
       {
         label: "Dataset 2",
-        data: data_1,
+        data: chartData.data_1,
         backgroundColor: datacolor2,
         borderColor: bordercolor,
-        borderWidth: 0,
         borderRadius: 10,
+        borderWidth: 0,
         stack: "Stack 0",
       },
     ],
@@ -147,19 +208,14 @@ const MyBarChart: React.FC<MyCharProp> = ({ less, grater, timePeriod }) => {
     scales: {
       x: {
         grid: {
-          display: false, // Disable grid lines for the x-axis
+          display: false,
         },
       },
       y: {
         grid: {
-          display: false, // Enable grid lines for the y-axis
+          display: false,
         },
-        min: 0, // Set the minimum value of the y-axis
-        max: 160, // Set the maximum value of the y-axis to accommodate stacked values
-        ticks: {
-          stepSize: 20, // Set the step size for the y-axis ticks
-        },
-        stacked: true, // Enable stacking on the y-axis
+        stacked: true,
       },
     },
   };

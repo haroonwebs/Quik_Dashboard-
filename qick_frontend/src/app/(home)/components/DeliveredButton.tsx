@@ -1,10 +1,11 @@
 "use client";
 import DeliveredOrder from "@/components/DeliveredOrder";
 import React from "react";
+import { ordertypes } from "@/types/ordertypes";
 
 interface DeliveredOrderProps {
-  lessValue: number | never[];
-  graterValue: number | never[];
+  lessValue: ordertypes[] | never[];
+  graterValue: ordertypes[] | never[];
   total: number;
 }
 
@@ -27,8 +28,8 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
 
       <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
         <DeliveredOrder
-          graterValue={graterValue}
-          lessValue={lessValue}
+          graterValue={graterValue.length}
+          lessValue={lessValue.length}
           total={total}
         />
       </div>
@@ -43,7 +44,7 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
               <span>Value &lt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {lessValue} orders
+              {lessValue.length} orders
             </div>
           </div>
           <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
@@ -53,7 +54,7 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
               <span>Value &gt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {graterValue} orders
+              {graterValue.length} orders
             </div>
           </div>
         </div>

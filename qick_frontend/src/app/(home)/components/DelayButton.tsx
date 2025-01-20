@@ -1,10 +1,11 @@
 "use client";
 import DougnatDelay from "@/components/DougnatDelay";
 import React from "react";
+import { ordertypes } from "@/types/ordertypes";
 
 interface DougnatDelayProps {
-  lessValue: number | never[];
-  graterValue: number | never[];
+  lessValue: ordertypes[] | never[];
+  graterValue: ordertypes[] | never[];
   total: number;
 }
 
@@ -27,8 +28,8 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
 
       <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
         <DougnatDelay
-          graterValue={graterValue}
-          lessValue={lessValue}
+          graterValue={graterValue.length}
+          lessValue={lessValue.length}
           total={total}
         />
       </div>
@@ -47,7 +48,7 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
               <span>Value &lt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {lessValue} orders
+              {lessValue.length} orders
             </div>
           </div>
           <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
@@ -61,7 +62,7 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
               <span>Value &gt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {graterValue} orders
+              {graterValue.length} orders
             </div>
           </div>
         </div>
