@@ -13,14 +13,11 @@ const TrendGraph: React.FC<trendGraphProps> = ({
   totalDelivered,
   trendPercentage,
 }) => {
-  console.log("totalOrders", totalOrders);
-  console.log("totalDelivered", totalDelivered);
-  console.log(`Trend Percentage: ${trendPercentage.toFixed(2)}%`); // Output: Trend Percentage: -10.00%
   const PercentagePositive = Math.abs(trendPercentage);
   return (
     <div className="flex md:flex-nowrap justify-center items-center gap-2 w-full md:w-[400px] ">
       <div className="flex justify-between items-center bg-[#FAFAFA]   w-full md:w-[164px] h-[44px] rounded-lg px-2">
-        <div className="flex justify-center items-center gap-1">
+        <div className="flex justify-center bg-red-50  items-center gap-[2px] rounded-[4px]">
           <span className="flex justify-center items-center text-[10px] tracking-tighter">
             {PercentagePositive.toFixed(2)}
             <TbPercentage className="text-[8px]" />
@@ -33,7 +30,7 @@ const TrendGraph: React.FC<trendGraphProps> = ({
         <span className="tracking-tighter">{totalOrders}</span>
       </div>
       <div className="flex justify-between items-center bg-[#FAFAFA] w-full md:w-[164px]   h-[44px] rounded-lg px-2">
-        <div className="flex justify-center items-center gap-1">
+        <div className="flex justify-center bg-green-50 items-center gap-[2px] rounded-[4px]">
           <span className="flex justify-center items-center text-[10px] tracking-tighter">
             {PercentagePositive.toFixed(2)}
             <TbPercentage className="text-[8px] " />
