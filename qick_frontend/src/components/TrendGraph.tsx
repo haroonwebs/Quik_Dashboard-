@@ -24,6 +24,7 @@ const TrendGraph: React.FC<trendGraphProps> = ({
           </span>
           <GoArrowDown className="text-[12px] text-red-700" />
         </div>
+
         <span className="text-[12px] tracking-tighter font-[600px]">
           Total orders
         </span>

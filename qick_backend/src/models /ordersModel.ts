@@ -40,7 +40,7 @@ export class Order {
   // @CreateDateColumn({ type: "timestamp" })
   // created_at!: Date;
 
-  @Column({ type: "timestamp" })
+  @CreateDateColumn({ type: "timestamp" })
   created_at!: Date;
 
   @UpdateDateColumn({ type: "timestamp" })

@@ -8,7 +8,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface DougnatAverageProps {
   lessValue: number | never[];
   graterValue: number | never[];
-  total: number;
+  total: string;
 }
 
 const DougnatAverage: React.FC<DougnatAverageProps> = ({

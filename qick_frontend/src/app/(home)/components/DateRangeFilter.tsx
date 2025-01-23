@@ -1,21 +1,46 @@
 "use client";
+
 import React, { useState } from "react";
+import { Calendar } from "react-date-range";
+import "react-date-range/dist/styles.css"; // Main CSS file
+import "react-date-range/dist/theme/default.css"; // Theme CSS file
 
-const DateRangeFilter = () => {
-  const [date, setDate] = useState<string>("");
+const DateRangeFilter: React.FC = () => {
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
 
-  window.history.pushState({}, "", `/orders?date=${date}`);
+  const handleSelect = (date: Date) => {
+    setStartDate(date);
+
+    const formattedDate = date.toLocaleDateString("en-CA");
+    const url = new URL(window.location.href);
+    url.searchParams.set("date", formattedDate);
+    window.history.pushState({}, "", url.toString());
+
+    setIsPickerOpen(false);
+  };
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString("en-CA");
+  };
 
   return (
-    <div className="flex flex-col md:flex-row  justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 px-4 md:px-0">
-      <span>Date Range</span>
-      <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md px-2">
-        <input
-          onChange={(e) => setDate(e.target.value)}
-          type="Date"
-          value={date}
-          className="w-full md:w-[275px] h-[35px] text-[#7E8299] bg-transparent outline-none px-2"
-        />
+    <div className="flex flex-col md:flex-row justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 px-4 md:px-0">
+      <span className="pr-[6px]">Date Range</span>
+      <div
+        className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md px-2 relative"
+        onClick={() => setIsPickerOpen(!isPickerOpen)}
+      >
+        <span className="text-[#7E8299]">{formatDate(startDate)}</span>
+        {isPickerOpen && (
+          <div className="absolute top-[40px] z-10 bg-white shadow-md rounded-md">
+            <Calendar
+              date={startDate}
+              onChange={handleSelect}
+              color="#4CAF50"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

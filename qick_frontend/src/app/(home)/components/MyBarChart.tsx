@@ -67,18 +67,18 @@ const MyBarChart: React.FC<MyCharProp> = ({
 
     if (timePeriod === "month") {
       const monthNames = [
-        "January",
-        "February",
+        "Jan",
+        "Feb",
         "March",
         "April",
         "May",
         "June",
         "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ];
       const daysInMonth = new Date(
         today.getFullYear(),

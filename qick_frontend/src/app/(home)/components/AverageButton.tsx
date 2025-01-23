@@ -6,7 +6,7 @@ import { ordertypes } from "@/types/ordertypes";
 interface DougnatAverageProps {
   lessValue: ordertypes[] | never[];
   graterValue: ordertypes[] | never[];
-  total: number;
+  total: string;
 }
 
 const AverageButton: React.FC<DougnatAverageProps> = ({

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 const SelectOrderStatus = () => {
-  const [status, setStatus] = useState<string | null>("pickedup");
+  const [status, setStatus] = useState<string | null>("");
 
   window.history?.pushState({}, "", `/order?order_status=${status}`);
   return (

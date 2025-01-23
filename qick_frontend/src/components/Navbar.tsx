@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 const Navbar = () => {
@@ -39,26 +38,22 @@ const Navbar = () => {
         </div>
 
         <ul className="md:flex hidden gap-6 font-[400px] text-[#7E8299] ">
-          <Link href="/">
-            <li className=" flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-              Dashboard
-            </li>
-          </Link>
-          <Link href="/">
-            <li className=" flex justify-center items-center  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-              Users
-            </li>
-          </Link>
-          <Link href="/">
-            <li className=" flex justify-center items-center  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-              Orders
-            </li>
-          </Link>
-          <Link href="/">
-            <li className="flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
-              Buyers
-            </li>
-          </Link>
+          <li className=" flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+            Dashboard
+          </li>
+
+          <li className=" flex justify-center items-center  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+            Users
+          </li>
+
+          <li className=" flex justify-center items-center  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+            Orders
+          </li>
+
+          <li className="flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+            Buyers
+          </li>
+
           <li
             className="relative hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md"
             onMouseEnter={handleMouseEnter}

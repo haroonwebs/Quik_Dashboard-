@@ -8,49 +8,77 @@ import { ordertypes } from "@/types/ordertypes";
 
 const BarChart = () => {
   const [status, setStatus] = useState<string | null>("live_orders");
+  const [date, setDate] = useState<string | null>("");
   const [orders, setOrders] = useState<ordertypes[]>([]);
   const [error, setError] = useState<any | null>(null);
   const [timePeriod, setTimePeriod] = useState("month");
   const searchParams = useSearchParams();
+
   useEffect(() => {
     const status = searchParams?.get("order_status");
     setStatus(status);
+    const date = searchParams?.get("date");
+    setDate(date);
     console.log("status", status);
-  }, [searchParams, status]);
+    console.log("date", date);
+  }, [searchParams]);
 
   useEffect(() => {
-    if (status) {
-      const fetchOrders = async () => {
-        const { orders, error } = await fetchById(
-          `http://localhost:4000/api/v1/orders/status?status=${status}`
-        );
-        if (error) {
-          setError(error);
-        } else {
+    const fetchOrders = async () => {
+      // Reset orders when fetching new data
+      setOrders([]);
+
+      try {
+        if (status && date) {
+          // Fetch by both status and date
+          const { orders, error } = await fetchById(
+            `http://localhost:4000/api/v1/orders/range?status=${status}&date=${date}`
+          );
+          if (error) throw new Error(error);
+          setOrders(orders || []);
+        } else if (status) {
+          // Fetch by status only
+          const { orders, error } = await fetchById(
+            `http://localhost:4000/api/v1/orders/status?status=${status}`
+          );
+          if (error) throw new Error(error);
+          setOrders(orders || []);
+        } else if (date) {
+          // Fetch by date only
+          const { orders, error } = await fetchById(
+            `http://localhost:4000/api/v1/orders/date?date=${date}`
+          );
+          if (error) throw new Error(error);
           setOrders(orders || []);
         }
-      };
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
 
-      fetchOrders();
-    }
-  }, [status]);
-  //  finding orders whose value grater then 1000
-  const graterValue = Array.isArray(orders)
-    ? orders?.filter((order) => order?.order_value >= 1000)
+    fetchOrders();
+  }, [status, date]);
+
+  console.log("orders with date", date, orders);
+
+  // Finding orders whose value greater than 1000
+  const greaterValue = Array.isArray(orders)
+    ? orders.filter((order) => order?.order_value >= 1000)
     : [];
-  //  finding orders whose value less then 1000
+
+  // Finding orders whose value less than 1000
   const lessValue = Array.isArray(orders)
-    ? orders?.filter((order) => order?.order_value < 1000)
+    ? orders.filter((order) => order?.order_value < 1000)
     : [];
 
   return (
-    <div className=" flex flex-col justify-center items-center w-full md:w-[900px] h-full md:h-[650px] border border-[#EFF2F5] rounded-md">
-      <div className=" flex justify-around md:justify-between items-center w-full md:w-[850px] h-full mt-2 md:mt-0 md:h-[80px] ">
+    <div className="flex flex-col justify-center items-center w-full md:w-[900px] h-full md:h-[650px] border border-[#EFF2F5] rounded-md">
+      <div className="flex justify-around md:justify-between items-center w-full md:w-[850px] h-full mt-2 md:mt-0 md:h-[80px] ">
         <div className="flex mb-2 md:mb-0 mt-2 md:mt-0 gap-2 ">
           <img src="/images/Group 2169.png" alt="" />
           <span className="text-[14px] font-[500px]">Live Order</span>
         </div>
-        <div className=" flex justify-center items-center ">
+        <div className="flex justify-center items-center ">
           {/* Select Box for Mobile */}
           <select
             value={timePeriod}
@@ -88,7 +116,7 @@ const BarChart = () => {
       <div className="flex justify-center items-end w-full md:w-[850px] h-full md:h-[620px] ">
         <MyBarChart
           lessValueOrders={lessValue}
-          graterValueOrders={graterValue}
+          graterValueOrders={greaterValue}
           timePeriod={timePeriod}
         />
       </div>

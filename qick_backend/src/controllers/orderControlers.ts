@@ -42,13 +42,13 @@ export const generate_Order = async (
       created_at,
     }: ordertypes = value;
 
-    // const currentDate = new Date();
-    // if (new Date(delivery_date) < currentDate) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Delivery date cannot be in the past.",
-    //   });
-    // }
+    const currentDate = new Date();
+    if (new Date(delivery_date) < currentDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Delivery date cannot be in the past.",
+      });
+    }
     const orderRepositery = AppDataSource.getRepository(Order);
     const neworder = orderRepositery.create({
       order_name,
@@ -136,7 +136,7 @@ export const OrdersByStatus = async (
   try {
     const orderRepositery = AppDataSource.getRepository(Order);
     const { status } = req.query as any;
-
+    console.log(status);
     let orders;
 
     if (status === "live_orders") {
@@ -153,12 +153,12 @@ export const OrdersByStatus = async (
       });
     } else if (
       [
-        "delivered",
-        "delayed",
+        "pickup awaiting",
         "pickedup",
         "warehouse",
         "delivery attempt tried",
-        "pickup awaiting",
+        "delivered",
+        "delayed",
       ].includes(status)
     ) {
       // Fetch orders for a single status
@@ -193,6 +193,56 @@ export const OrdersByStatus = async (
     return res.status(500).json({
       success: false,
       message: `internal server error: ${error}`,
+    });
+  }
+};
+
+// fetch orders by date
+
+export const OrdersByDate = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const orderRepository = AppDataSource.getRepository(Order);
+    const { date } = req.query as any;
+
+    console.log("date", date);
+    if (!date) {
+      return res.status(400).json({
+        success: false,
+        message: "Date parameter is required",
+      });
+    }
+
+    const startDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
+    const endDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
+    endDate.setUTCDate(endDate.getUTCDate());
+
+    // Use a query to fetch orders where the date part of created_at matches the provided date
+    const orders = await orderRepository
+      .createQueryBuilder("order")
+      .where("DATE(order.created_at) = :date", { date })
+      .getMany();
+
+    console.log("orders", orders);
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No orders found for the given date",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Orders successfully fetched",
+      orders,
+      count: orders.length,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: `Internal server error: ${error.message}`,
     });
   }
 };
@@ -240,6 +290,74 @@ export const updateOrder = async (
     return res.status(500).json({
       success: false,
       message: `internal server error : ${error}`,
+    });
+  }
+};
+
+export const OrdersByStatusAndDate = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const orderRepositery = AppDataSource.getRepository(Order);
+    const { status } = req.query as any;
+    console.log(status);
+    let orders;
+
+    if (status === "live_orders") {
+      // Fetch orders for multiple statuses
+      orders = await orderRepositery.find({
+        where: {
+          order_status: In([
+            "pickup awaiting",
+            "pickedup",
+            "warehouse",
+            "delivery attempt tried",
+          ]),
+        },
+      });
+    } else if (
+      [
+        "pickup awaiting",
+        "pickedup",
+        "warehouse",
+        "delivery attempt tried",
+        "delivered",
+        "delayed",
+      ].includes(status)
+    ) {
+      // Fetch orders for a single status
+      orders = await orderRepositery.find({
+        where: { order_status: status },
+      });
+    } else {
+      orders = await orderRepositery.find();
+    }
+
+    const orderCount = orders.length;
+    if (!orders) {
+      return res.status(404).json({
+        success: false,
+        message: "something went wrong to get orders",
+      });
+    }
+    if (orders.length === 0) {
+      return res.status(200).json({
+        success: false,
+        message: "Orders Not available",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "orders successfuly fetched",
+      orders,
+      count: orderCount,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: `internal server error: ${error}`,
     });
   }
 };
