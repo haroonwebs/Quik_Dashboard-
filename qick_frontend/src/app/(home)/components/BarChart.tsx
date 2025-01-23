@@ -8,8 +8,7 @@ import { ordertypes } from "@/types/ordertypes";
 
 const BarChart = () => {
   const [status, setStatus] = useState<string | null>("live_orders");
-  const [startdate, setStartDate] = useState<string | null>("");
-  const [enddate, setEndDate] = useState<string | null>("");
+  const [date, setDate] = useState<string | null>("");
   const [orders, setOrders] = useState<ordertypes[]>([]);
   const [error, setError] = useState<any | null>(null);
   const [timePeriod, setTimePeriod] = useState("month");
@@ -18,13 +17,10 @@ const BarChart = () => {
   useEffect(() => {
     const status = searchParams?.get("order_status");
     setStatus(status);
-    const startDate = searchParams.get("start_date");
-    setStartDate(startDate);
-    const endDate = searchParams.get("end_date");
-    setEndDate(endDate);
-
-    // console.log("status", status);
-    // console.log("date", date);
+    const date = searchParams?.get("date");
+    setDate(date);
+    console.log("status", status);
+    console.log("date", date);
   }, [searchParams]);
 
   useEffect(() => {
@@ -33,10 +29,10 @@ const BarChart = () => {
       setOrders([]);
 
       try {
-        if (status && { startdate, enddate }) {
+        if (status && date) {
           // Fetch by both status and date
           const { orders, error } = await fetchById(
-            `http://localhost:4000/api/v1/orders/range?status=${status}&start_date=${startdate}&end_date=${enddate}`
+            `http://localhost:4000/api/v1/orders/range?status=${status}&date=${date}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
@@ -47,10 +43,10 @@ const BarChart = () => {
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
-        } else if (Date) {
+        } else if (date) {
           // Fetch by date only
           const { orders, error } = await fetchById(
-            `http://localhost:4000/api/v1/orders/date?date=${Date}`
+            `http://localhost:4000/api/v1/orders/date?date=${date}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
@@ -61,9 +57,7 @@ const BarChart = () => {
     };
 
     fetchOrders();
-  }, [status, Date]);
-
-  console.log("orders with date", Date, orders);
+  }, [status, date]);
 
   // Finding orders whose value greater than 1000
   const greaterValue = Array.isArray(orders)
