@@ -216,13 +216,13 @@ export const OrdersByDate = async (
     }
 
     const startDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
-    const endDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
-    endDate.setUTCDate(endDate.getUTCDate());
+    const endDate = new Date(date + "T23:59:59Z"); // End of the day in UTC
 
     // Use a query to fetch orders where the date part of created_at matches the provided date
     const orders = await orderRepository
       .createQueryBuilder("order")
-      .where("DATE(order.created_at) = :date", { date })
+      .where("order.created_at >= :startDate", { startDate })
+      .andWhere("order.created_at <= :endDate", { endDate })
       .getMany();
 
     console.log("orders", orders);
@@ -294,70 +294,66 @@ export const updateOrder = async (
   }
 };
 
+// controller to find orders by date and status
+
 export const OrdersByStatusAndDate = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   try {
-    const orderRepositery = AppDataSource.getRepository(Order);
-    const { status } = req.query as any;
-    console.log(status);
-    let orders;
+    const orderRepository = AppDataSource.getRepository(Order);
+    const { status, date } = req.query as any;
 
-    if (status === "live_orders") {
-      // Fetch orders for multiple statuses
-      orders = await orderRepositery.find({
-        where: {
-          order_status: In([
-            "pickup awaiting",
-            "pickedup",
-            "warehouse",
-            "delivery attempt tried",
-          ]),
-        },
+    // Validate status and date
+
+    const validStatuses = [
+      "pickup awaiting",
+      "pickedup",
+      "warehouse",
+      "delivery attempt tried",
+      "delivered",
+      "delayed",
+    ];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid order status.",
       });
-    } else if (
-      [
-        "pickup awaiting",
-        "pickedup",
-        "warehouse",
-        "delivery attempt tried",
-        "delivered",
-        "delayed",
-      ].includes(status)
-    ) {
-      // Fetch orders for a single status
-      orders = await orderRepositery.find({
-        where: { order_status: status },
-      });
-    } else {
-      orders = await orderRepositery.find();
     }
+
+    const startDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
+    const endDate = new Date(date + "T23:59:59Z"); // End of the day in UTC
+
+    console.info("startDate", startDate);
+    console.info("endDate", endDate);
+    // Fetch orders for a single status within the date range
+    const orders = await orderRepository
+      .createQueryBuilder("order")
+      .where("order.order_status = :status", { status })
+      .andWhere("order.created_at >= :startDate", { startDate })
+      .andWhere("order.created_at <= :endDate", { endDate })
+      .getMany();
 
     const orderCount = orders.length;
-    if (!orders) {
-      return res.status(404).json({
-        success: false,
-        message: "something went wrong to get orders",
-      });
-    }
-    if (orders.length === 0) {
+
+    if (orderCount === 0) {
       return res.status(200).json({
         success: false,
-        message: "Orders Not available",
+        message: "No orders available for the given status and date.",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "orders successfuly fetched",
+      message: "Orders successfully fetched.",
       orders,
       count: orderCount,
     });
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message: `internal server error: ${error}`,
+      message: `Internal server error: ${error.message || error}`,
     });
   }
 };

@@ -6,8 +6,8 @@ const SelectOrderStatus = () => {
 
   window.history?.pushState({}, "", `/order?order_status=${status}`);
   return (
-    <div className="flex flex-col md:flex-row justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 mt-3 px-4 md:px-0">
-      <span>Order Status</span>
+    <div className="flex flex-col md:flex-row justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-7 mt-3 px-4 md:px-0">
+      <span className="text-[12px] font-[500px] ">Order Status</span>
       <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md">
         <select
           className="w-full md:w-[275px] h-[35px] text-[#7E8299] font-[500px] bg-transparent outline-none  px-2"

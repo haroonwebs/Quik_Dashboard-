@@ -113,9 +113,9 @@ export default async function Home() {
 
   return (
     <section className="bg-[#F5F8FA] min-h-100">
-      <main className="w-full h-auto flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-4 shadow-md">
-        <div className="flex flex-col justify-center items-center w-full md:w-[950px] h-auto md:h-[800px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className="flex  flex-col md:flex-row justify-between items-center px-2 h-auto md:h-[100px] w-full">
+      <main className="w-full h-auto flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-3 shadow-md">
+        <div className="flex flex-col justify-center md:justify-between items-center w-full md:w-[950px] gap-3 h-auto md:h-[900px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
+          <div className="flex  flex-col md:flex-row justify-between items-center mb-1 md:pt-3 px-2 h-auto md:h-[100px] w-full">
             <div className="flex flex-col px-4 pr-60 md:pr-0">
               <span className="text-[12px] md:text-[20px] font-semibold">
                 Orders Statistics
@@ -198,16 +198,6 @@ export default async function Home() {
 
           {/* date picker for date filer */}
           <DateRangeFilter />
-
-          {/* <div className="flex flex-col md:flex-row  justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 px-4 md:px-0">
-            <span>Date Range</span>
-            <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md px-2">
-              <input
-                type="Date"
-                className="w-full md:w-[275px] h-[35px] text-[#7E8299] bg-transparent outline-none px-2"
-              />
-            </div>
-          </div> */}
 
           <LiveButton
             graterValue={graterValueLive}

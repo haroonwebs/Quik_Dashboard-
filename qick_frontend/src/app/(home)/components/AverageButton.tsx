@@ -20,7 +20,7 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
   return (
     <div
       onClick={handle_Average}
-      className="flex flex-col md:flex-row items-center shadow-md justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] border-[#8AEFD1] bg-[#4fc9f333] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-3"
+      className="flex flex-col md:flex-row items-center shadow-sm justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px]  bg-[#FAFAFA] hover:bg-[#dff5fc33] transition hover:border-[#8AEFD1] hover:border  rounded-2xl mt-3"
     >
       <span className="md:hidden pr-36 text-[18px] font-[600px]">
         Average Order Size

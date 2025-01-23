@@ -21,7 +21,7 @@ const LiveButton: React.FC<LiveButtonProps> = ({
   return (
     <div
       onClick={handle_LiveUrl}
-      className="flex flex-col md:flex-row items-center shadow-md justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] border-[#4FC9F3] bg-[#4FC9F333] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-3"
+      className="flex flex-col md:flex-row items-center shadow-sm justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px]  bg-[#4FC9F333] hover:border-[#4FC9F3] hover:border transition hover:shadow-md   rounded-2xl mt-3"
     >
       <span className="md:hidden pr-48 text-[18px] font-[600px]">
         Live Orders

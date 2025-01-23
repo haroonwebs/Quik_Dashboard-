@@ -8,7 +8,8 @@ import { ordertypes } from "@/types/ordertypes";
 
 const BarChart = () => {
   const [status, setStatus] = useState<string | null>("live_orders");
-  const [date, setDate] = useState<string | null>("");
+  const [startdate, setStartDate] = useState<string | null>("");
+  const [enddate, setEndDate] = useState<string | null>("");
   const [orders, setOrders] = useState<ordertypes[]>([]);
   const [error, setError] = useState<any | null>(null);
   const [timePeriod, setTimePeriod] = useState("month");
@@ -17,10 +18,13 @@ const BarChart = () => {
   useEffect(() => {
     const status = searchParams?.get("order_status");
     setStatus(status);
-    const date = searchParams?.get("date");
-    setDate(date);
-    console.log("status", status);
-    console.log("date", date);
+    const startDate = searchParams.get("start_date");
+    setStartDate(startDate);
+    const endDate = searchParams.get("end_date");
+    setEndDate(endDate);
+
+    // console.log("status", status);
+    // console.log("date", date);
   }, [searchParams]);
 
   useEffect(() => {
@@ -29,10 +33,10 @@ const BarChart = () => {
       setOrders([]);
 
       try {
-        if (status && date) {
+        if (status && { startdate, enddate }) {
           // Fetch by both status and date
           const { orders, error } = await fetchById(
-            `http://localhost:4000/api/v1/orders/range?status=${status}&date=${date}`
+            `http://localhost:4000/api/v1/orders/range?status=${status}&start_date=${startdate}&end_date=${enddate}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
@@ -43,10 +47,10 @@ const BarChart = () => {
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
-        } else if (date) {
+        } else if (Date) {
           // Fetch by date only
           const { orders, error } = await fetchById(
-            `http://localhost:4000/api/v1/orders/date?date=${date}`
+            `http://localhost:4000/api/v1/orders/date?date=${Date}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
@@ -57,9 +61,9 @@ const BarChart = () => {
     };
 
     fetchOrders();
-  }, [status, date]);
+  }, [status, Date]);
 
-  console.log("orders with date", date, orders);
+  console.log("orders with date", Date, orders);
 
   // Finding orders whose value greater than 1000
   const greaterValue = Array.isArray(orders)
@@ -72,7 +76,7 @@ const BarChart = () => {
     : [];
 
   return (
-    <div className="flex flex-col justify-center items-center w-full md:w-[900px] h-full md:h-[650px] border border-[#EFF2F5] rounded-md">
+    <div className="flex flex-col justify-center items-center w-full md:mb-14 md:w-[900px] h-full md:h-[780px] border border-[#EFF2F5] rounded-md">
       <div className="flex justify-around md:justify-between items-center w-full md:w-[850px] h-full mt-2 md:mt-0 md:h-[80px] ">
         <div className="flex mb-2 md:mb-0 mt-2 md:mt-0 gap-2 ">
           <img src="/images/Group 2169.png" alt="" />
@@ -94,19 +98,31 @@ const BarChart = () => {
           <div className="hidden md:flex justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
             <button
               onClick={() => setTimePeriod("day")}
-              className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px] rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white"
+              className={`flex justify-center items-center text-[9px] font-[600] rounded-md w-[80px] h-[32px] ${
+                timePeriod === "day"
+                  ? "bg-[#4FC9F3] text-white"
+                  : "text-[#5E6278] hover:bg-[#4FC9F3] hover:text-white"
+              }`}
             >
               Today
             </button>
             <button
               onClick={() => setTimePeriod("week")}
-              className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px] rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white"
+              className={`flex justify-center items-center text-[9px] font-[600] rounded-md w-[80px] h-[32px] ${
+                timePeriod === "week"
+                  ? "bg-[#4FC9F3] text-white"
+                  : "text-[#5E6278] hover:bg-[#4FC9F3] hover:text-white"
+              }`}
             >
               This week
             </button>
             <button
               onClick={() => setTimePeriod("month")}
-              className="flex justify-center items-center text-[9px] text-[#5E6278] font-[600px] rounded-md w-[80px] h-[27px] hover:bg-[#4FC9F3] hover:text-white"
+              className={`flex justify-center items-center text-[9px] font-[600] rounded-md w-[80px] h-[32px] ${
+                timePeriod === "month"
+                  ? "bg-[#4FC9F3] text-white"
+                  : "text-[#5E6278] hover:bg-[#4FC9F3] hover:text-white"
+              }`}
             >
               This Month
             </button>

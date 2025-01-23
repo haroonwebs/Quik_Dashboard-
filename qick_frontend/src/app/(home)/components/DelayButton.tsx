@@ -20,7 +20,7 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
   return (
     <div
       onClick={handle_delay}
-      className="flex flex-col md:flex-row items-center shadow-md justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] border-[#FFB5B5] bg-[#FAFAFA] hover:bg-[#dff5fc33] transition hover:shadow-2xl border  rounded-2xl mt-3"
+      className="flex flex-col md:flex-row items-center shadow-sm justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] bg-[#FAFAFA] hover:border-[#FFB5B5] hover:border transition hover:shadow-md  rounded-2xl mt-3"
     >
       <span className="md:hidden pr-44 text-[18px] font-[600px]">
         Delayed Orders

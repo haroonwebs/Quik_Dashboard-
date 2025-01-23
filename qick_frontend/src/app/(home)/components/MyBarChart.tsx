@@ -216,11 +216,17 @@ const MyBarChart: React.FC<MyCharProp> = ({
           display: false,
         },
         stacked: true,
+        beginAtZero: true,
+        min: 0, // Set minimum value
+        max: 120, // Set maximum value
+        ticks: {
+          stepSize: 20,
+        },
       },
     },
   };
 
-  return <Bar data={chartTData} options={options} height={200} />;
+  return <Bar data={chartTData} options={options} height={220} />;
 };
 
 export default MyBarChart;
