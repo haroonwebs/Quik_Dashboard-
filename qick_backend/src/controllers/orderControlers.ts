@@ -205,27 +205,25 @@ export const OrdersByDate = async (
 ): Promise<any> => {
   try {
     const orderRepository = AppDataSource.getRepository(Order);
-    const { date } = req.query as any;
+    const { start_date } = req.query as any;
 
-    console.log("date", date);
-    if (!date) {
+    if (!start_date) {
       return res.status(400).json({
         success: false,
         message: "Date parameter is required",
       });
     }
 
-    const startDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
-    const endDate = new Date(date + "T23:59:59Z"); // End of the day in UTC
+    // const UTCstartDate = new Date(start_date + "T00:00:00Z"); // Start of the day in UTC
+    const endDate = new Date(start_date + "T23:59:59Z"); // End of the day in UTC
 
     // Use a query to fetch orders where the date part of created_at matches the provided date
     const orders = await orderRepository
       .createQueryBuilder("order")
-      .where("order.created_at >= :startDate", { startDate })
+      .where("order.created_at >= :start_date", { start_date })
       .andWhere("order.created_at <= :endDate", { endDate })
       .getMany();
 
-    console.log("orders", orders);
     if (!orders || orders.length === 0) {
       return res.status(404).json({
         success: false,
@@ -302,7 +300,7 @@ export const OrdersByStatusAndDate = async (
 ): Promise<any> => {
   try {
     const orderRepository = AppDataSource.getRepository(Order);
-    const { status, date } = req.query as any;
+    const { status, start_date, end_date } = req.query as any;
 
     // Validate status and date
 
@@ -322,18 +320,30 @@ export const OrdersByStatusAndDate = async (
       });
     }
 
-    const startDate = new Date(date + "T00:00:00Z"); // Start of the day in UTC
-    const endDate = new Date(date + "T23:59:59Z"); // End of the day in UTC
+    const startDate = new Date(start_date + "T00:00:00Z"); // Start of the day in UTC
+    const endStartDay = new Date(start_date + "T23:59:59Z"); // end of the start_date
 
-    console.info("startDate", startDate);
-    console.info("endDate", endDate);
-    // Fetch orders for a single status within the date range
-    const orders = await orderRepository
-      .createQueryBuilder("order")
-      .where("order.order_status = :status", { status })
-      .andWhere("order.created_at >= :startDate", { startDate })
-      .andWhere("order.created_at <= :endDate", { endDate })
-      .getMany();
+    let endRangeDate;
+    if (end_date) {
+      endRangeDate = new Date(end_date + "T23:59:59Z"); // End of the day in UTC
+    }
+
+    let orders: any;
+    if (status && startDate && endRangeDate) {
+      orders = await orderRepository
+        .createQueryBuilder("order")
+        .where("order.order_status = :status", { status })
+        .andWhere("order.created_at >= :startDate", { startDate })
+        .andWhere("order.created_at <= :endRangeDate", { endRangeDate })
+        .getMany();
+    } else if (endStartDay && startDate && status) {
+      orders = await orderRepository
+        .createQueryBuilder("order")
+        .where("order.order_status = :status", { status })
+        .andWhere("order.created_at >= :startDate", { startDate })
+        .andWhere("order.created_at <= :endStartDay", { endStartDay })
+        .getMany();
+    }
 
     const orderCount = orders.length;
 
