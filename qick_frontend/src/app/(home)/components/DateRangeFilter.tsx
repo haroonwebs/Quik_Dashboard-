@@ -1,28 +1,64 @@
 "use client";
 
-import React, { useState } from "react";
-import { Calendar } from "react-date-range";
-import "react-date-range/dist/styles.css"; // Main CSS file
-import "react-date-range/dist/theme/default.css"; // Theme CSS file
+import React, { useEffect, useRef, useState } from "react";
+import { DateRange } from "react-date-range"; // Import DateRange instead of Calendar
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 const DateRangeFilter: React.FC = () => {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [dateRange, setDateRange] = useState<{
+    startDate: Date | null;
+    endDate: Date | null;
+  }>({
+    startDate: null,
+    endDate: null,
+  });
 
-  const handleSelect = (date: Date) => {
-    setStartDate(date);
+  const handleSelect = (ranges: any) => {
+    const { selection } = ranges; // Get the selection from the ranges
+    setDateRange({
+      startDate: selection.startDate,
+      endDate: selection.endDate,
+    });
 
-    const formattedDate = date.toLocaleDateString("en-CA");
+    const formattedStartDate = selection.startDate.toLocaleDateString("en-CA");
+    const formattedEndDate = selection.endDate.toLocaleDateString("en-CA");
     const url = new URL(window.location.href);
-    url.searchParams.set("date", formattedDate);
+    if (formattedStartDate === formattedEndDate) {
+      url.searchParams.delete("endDate");
+      url.searchParams.set("startDate", formattedStartDate);
+    } else {
+      url.searchParams.delete("startDate");
+      url.searchParams.delete("endDate");
+      url.searchParams.set("startDate", formattedStartDate);
+      url.searchParams.set("endDate", formattedEndDate);
+    }
     window.history.pushState({}, "", url.toString());
-
     setIsPickerOpen(false);
   };
 
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-CA");
+  const formatDate = (date: Date | null) => {
+    return date ? date.toLocaleDateString("en-CA") : "Select Date";
   };
+
+  const pickerRef = useRef<HTMLDivElement | null>(null); // Ref for the date picker
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(event.target as Node)
+      ) {
+        setIsPickerOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-7 px-4 md:px-0">
@@ -32,12 +68,25 @@ const DateRangeFilter: React.FC = () => {
         onClick={() => setIsPickerOpen(!isPickerOpen)}
       >
         <span className=" text-[#7E8299] pl-[6px] ">
-          {formatDate(startDate)}
+          {dateRange.startDate && dateRange.endDate
+            ? `${formatDate(dateRange.startDate)} - ${formatDate(
+                dateRange.endDate
+              )}`
+            : "Select Date Range"}
         </span>
         {isPickerOpen && (
-          <div className="absolute top-[40px] z-10 bg-white shadow-md rounded-md">
-            <Calendar
-              date={startDate}
+          <div
+            ref={pickerRef}
+            className="absolute top-[40px] z-10 bg-white shadow-md rounded-md"
+          >
+            <DateRange
+              ranges={[
+                {
+                  startDate: dateRange.startDate || new Date(),
+                  endDate: dateRange.endDate || new Date(),
+                  key: "selection",
+                },
+              ]}
               onChange={handleSelect}
               color="#4CAF50"
             />
