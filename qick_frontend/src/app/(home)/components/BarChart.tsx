@@ -22,9 +22,6 @@ const BarChart = () => {
     setStartDate(startDate);
     const endDate = searchParams?.get("endDate");
     setEndtDate(endDate);
-    console.log("status", status);
-    console.log("startDate", startDate);
-    console.log("endDate", endDate);
   }, [searchParams]);
 
   useEffect(() => {

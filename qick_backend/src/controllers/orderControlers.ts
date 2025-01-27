@@ -136,7 +136,6 @@ export const OrdersByStatus = async (
   try {
     const orderRepositery = AppDataSource.getRepository(Order);
     const { status } = req.query as any;
-    console.log(status);
     let orders;
 
     if (status === "live_orders") {
@@ -302,17 +301,16 @@ export const OrdersByStatusAndDate = async (
     const orderRepository = AppDataSource.getRepository(Order);
     const { status, start_date, end_date } = req.query as any;
 
-    // Validate status and date
-
     const validStatuses = [
+      "live_orders",
       "pickup awaiting",
       "pickedup",
       "warehouse",
       "delivery attempt tried",
       "delivered",
       "delayed",
+      "average",
     ];
-
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
         success: false,
@@ -320,32 +318,52 @@ export const OrdersByStatusAndDate = async (
       });
     }
 
-    const startDate = new Date(start_date + "T00:00:00Z"); // Start of the day in UTC
-    const endStartDay = new Date(start_date + "T23:59:59Z"); // end of the start_date
-
-    let endRangeDate;
-    if (end_date) {
-      endRangeDate = new Date(end_date + "T23:59:59Z"); // End of the day in UTC
-    }
-
+    const startDate = new Date(start_date + "T00:00:00Z");
     let orders: any;
-    if (status && startDate && endRangeDate) {
+
+    if (status === "live_orders" && startDate && end_date) {
+      const statuses = [
+        "pickup awaiting",
+        "pickedup",
+        "warehouse",
+        "delivery attempt tried",
+      ];
+      orders = await orderRepository
+        .createQueryBuilder("order")
+        .where("order.order_status IN (:...statuses)", { statuses })
+        .andWhere("order.created_at >= :startDate", { startDate })
+        .andWhere("order.created_at <= :endRangeDate", {
+          endRangeDate: new Date(end_date + "T23:59:59Z"),
+        })
+        .getMany();
+    } else if (status === "average" && startDate && end_date) {
+      const statuses = [
+        "pickup awaiting",
+        "pickedup",
+        "warehouse",
+        "delivery attempt tried",
+        "delayed",
+        "delivered",
+      ];
+      orders = await orderRepository
+        .createQueryBuilder("order")
+        .where("order.order_status IN (:...statuses)", { statuses })
+        .andWhere("order.created_at >= :startDate", { startDate })
+        .andWhere("order.created_at <= :endRangeDate", {
+          endRangeDate: new Date(end_date + "T23:59:59Z"),
+        })
+        .getMany();
+    } else {
+      const endRangeDate = new Date(end_date + "T23:59:59Z");
       orders = await orderRepository
         .createQueryBuilder("order")
         .where("order.order_status = :status", { status })
         .andWhere("order.created_at >= :startDate", { startDate })
         .andWhere("order.created_at <= :endRangeDate", { endRangeDate })
         .getMany();
-    } else if (endStartDay && startDate && status) {
-      orders = await orderRepository
-        .createQueryBuilder("order")
-        .where("order.order_status = :status", { status })
-        .andWhere("order.created_at >= :startDate", { startDate })
-        .andWhere("order.created_at <= :endStartDay", { endStartDay })
-        .getMany();
     }
 
-    const orderCount = orders.length;
+    const orderCount = orders ? orders.length : 0;
 
     if (orderCount === 0) {
       return res.status(200).json({

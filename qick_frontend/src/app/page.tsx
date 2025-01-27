@@ -109,7 +109,10 @@ export default async function Home() {
     totalOrders
   );
 
+  const deliveredAverage = (totalDelivered / totalOrdersCount) * 100;
+
   // formate date
+  console.log("deliveredAverage", deliveredAverage);
 
   return (
     <section className="bg-[#F5F8FA] min-h-100">
@@ -130,6 +133,7 @@ export default async function Home() {
               totalDelivered={totalDelivered}
               totalOrders={totalOrders}
               trendPercentage={trendPercentage}
+              DeliveredAverage={deliveredAverage}
             />
             {/* end trent graph section */}
           </div>
@@ -162,39 +166,6 @@ export default async function Home() {
 
           <SelectOrderStatus />
           {/* select box order status selection  */}
-          {/* <div className="flex flex-col md:flex-row justify-end w-full md:w-[406px] h-auto md:h-[47px] gap-1 md:gap-4 mt-3 px-4 md:px-0">
-            <span>Order Status</span>
-            <div className="w-full md:w-[300px] h-[35px] border border-[#EFF2F5] rounded-md">
-              <select
-                className="w-full md:w-[275px] h-[35px] text-[#7E8299] font-[500px] bg-transparent outline-none  px-2"
-                onChange={(e) => e.target.value}
-              >
-                "pickup awaiting", "pickedup", "warehouse", "delivery attempt
-                tried", "delivered", "delayed"
-                <option disabled value="select" className="p-3 ">
-                  select
-                </option>
-                <option value="pickup awaiting" className="p-3 ">
-                  Pickup Awaiting
-                </option>
-                <option value="pickedup" className="p-3 ">
-                  Picked Up
-                </option>
-                <option value="warehouse" className="p-3 ">
-                  Reached Warehouse
-                </option>
-                <option value="delivery attempt tried" className="p-3 ">
-                  Delivery attempt tried
-                </option>
-                <option value="delivered" className="p-3 ">
-                  Delivered
-                </option>
-                <option value="delayed" className="p-3 ">
-                  Delayed
-                </option>
-              </select>
-            </div>
-          </div> */}
 
           {/* date picker for date filer */}
           <DateRangeFilter />

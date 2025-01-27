@@ -8,11 +8,11 @@ import "react-date-range/dist/theme/default.css";
 const DateRangeFilter: React.FC = () => {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [dateRange, setDateRange] = useState<{
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: Date | undefined;
+    endDate: Date | undefined;
   }>({
-    startDate: null,
-    endDate: null,
+    startDate: undefined,
+    endDate: undefined,
   });
 
   const handleSelect = (ranges: any) => {
@@ -38,7 +38,7 @@ const DateRangeFilter: React.FC = () => {
     setIsPickerOpen(false);
   };
 
-  const formatDate = (date: Date | null) => {
+  const formatDate = (date: Date | undefined) => {
     return date ? date.toLocaleDateString("en-CA") : "Select Date";
   };
 
@@ -82,8 +82,8 @@ const DateRangeFilter: React.FC = () => {
             <DateRange
               ranges={[
                 {
-                  startDate: dateRange.startDate || new Date(),
-                  endDate: dateRange.endDate || new Date(),
+                  startDate: dateRange.startDate || new Date() || undefined,
+                  endDate: dateRange.endDate || new Date() || undefined,
                   key: "selection",
                 },
               ]}
