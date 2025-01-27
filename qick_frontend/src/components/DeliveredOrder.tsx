@@ -22,7 +22,7 @@ const DeliveredOrder: React.FC<DeliveredOrderProps> = ({
         data: [lessValue, graterValue],
         backgroundColor: ["#1fe070", "#87f5b5"],
         borderColor: ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };

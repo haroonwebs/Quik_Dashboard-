@@ -22,7 +22,7 @@ const DougnatLive: React.FC<DougnatLiveProps> = ({
         data: [lessValue, graterValue],
         backgroundColor: ["#4FC9F3", "#1C3A6A"],
         borderColor: ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };

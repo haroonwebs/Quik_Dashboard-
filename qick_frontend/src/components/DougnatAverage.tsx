@@ -22,7 +22,7 @@ const DougnatAverage: React.FC<DougnatAverageProps> = ({
         data: [lessValue, graterValue],
         backgroundColor: ["#639787", "#8AEFD1"],
         borderColor: ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };

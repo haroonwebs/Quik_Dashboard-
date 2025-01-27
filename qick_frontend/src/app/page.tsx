@@ -115,7 +115,7 @@ export default async function Home() {
   console.log("deliveredAverage", deliveredAverage);
 
   return (
-    <section className="bg-[#F5F8FA] min-h-100">
+    <section className="bg-[#edeff1] min-h-100">
       <main className="w-full h-auto flex flex-col lg:flex-row justify-center gap-4 lg:gap-8 mt-3 shadow-md">
         <div className="flex flex-col justify-center md:justify-between items-center w-full lg:w-[950px] gap-3 h-auto lg:h-[900px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
           <div className="flex  flex-col lg:flex-row justify-between items-center mb-1 lg:pt-3 px-2 h-auto lg:h-[100px] w-full">

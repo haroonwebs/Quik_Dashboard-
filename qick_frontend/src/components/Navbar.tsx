@@ -5,6 +5,7 @@ import Image from "next/image";
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isdropDownLinke, setDropDownLinks] = useState(false);
 
   const handleMouseEnter = () => {
     setIsDropdownOpen(true);
@@ -21,12 +22,16 @@ const Navbar = () => {
   const handleProfileMouseLeave = () => {
     setIsProfileDropdownOpen(false);
   };
+  const handleDropLinks = () => {
+    setDropDownLinks((prev) => !prev);
+  };
 
   return (
     <nav className="bg-[#FFFFFF] w-full flex justify-between items-center px-4 lg:px-10  min-h-16 shadow-sm">
       <div className="w-[50%]  flex gap-8">
-        <div className=" flex w-[80px] h-[28px] gap-2">
+        <div className=" flex w-[80px] h-[28px] gap-2 relative">
           <Image
+            onClick={handleDropLinks}
             className="flex md:hidden"
             src="/images/Group 1923.png" // Path to your image
             alt="img no found "
@@ -36,7 +41,36 @@ const Navbar = () => {
           />
           <img src="/images/Group.png" alt="Not found" />
         </div>
+        {isdropDownLinke && (
+          <div className="absolute sm:hidden w-36 h-80 top-14 left-6 bg-blue-400  rounded-t-sm rounded-b-lg shadow-lg bg-transparent">
+            <ul className="flex flex-col gap-6 font-[400px] text-[#7E8299] ">
+              <li className=" flex justify-center text-white font-bold text-[16px] items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Dashboard
+              </li>
 
+              <li className=" flex justify-center items-center  text-white font-bold text-[16px] hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Users
+              </li>
+
+              <li className=" flex justify-center items-center text-white font-bold text-[16px]  hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Orders
+              </li>
+
+              <li className="flex justify-center items-center text-white font-bold text-[16px] hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Finance
+              </li>
+              <li className="flex justify-center items-center text-white font-bold text-[16px] hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Transactions
+              </li>
+              <li className="flex justify-center items-center text-white font-bold text-[16px] hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Payouts
+              </li>
+              <li className="flex justify-center items-center text-white font-bold text-[16px] hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
+                Buyers
+              </li>
+            </ul>
+          </div>
+        )}
         <ul className="md:flex hidden gap-6 font-[400px] text-[#7E8299] ">
           <li className=" flex justify-center items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
             Dashboard

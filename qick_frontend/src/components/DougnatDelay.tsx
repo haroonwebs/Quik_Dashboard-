@@ -22,7 +22,7 @@ const DougnatDelay: React.FC<DougnatDelayProps> = ({
         data: [lessValue, graterValue],
         backgroundColor: ["#FFB5B5", "#D48989"],
         borderColor: ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };
