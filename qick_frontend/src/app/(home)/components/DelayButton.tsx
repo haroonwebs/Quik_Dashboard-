@@ -20,13 +20,13 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
   return (
     <div
       onClick={handle_delay}
-      className="flex flex-col md:flex-row items-center shadow-sm justify-center md:gap-2 w-[333px]  md:w-[406px] h-[322px] md:h-[162px] bg-[#FAFAFA] hover:border-[#FFB5B5] hover:border transition hover:shadow-md  rounded-2xl mt-3"
+      className="flex flex-col lg:flex-row items-center shadow-sm justify-center lg:gap-2 w-[333px]  lg:w-[406px] h-[322px] lg:h-[162px] bg-[#FAFAFA] hover:border-[#FFB5B5] hover:border transition hover:shadow-md  rounded-2xl mt-3"
     >
-      <span className="md:hidden pr-44 text-[18px] font-[600px]">
+      <span className="lg:hidden pr-44 text-[18px] font-[600px]">
         Delayed Orders
       </span>
 
-      <div className="md:w-[112px] md:h-[111px] w-[125px] h-[124px]">
+      <div className="lg:w-[112px] lg:h-[111px] w-[125px] h-[124px]">
         <DougnatDelay
           graterValue={graterValue.length}
           lessValue={lessValue.length}
@@ -34,10 +34,10 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
         />
       </div>
       <div className="h-[111px] w-[243px] mt-5">
-        <span className="hidden md:block text-[18px] font-[600px]">
+        <span className="hidden lg:block text-[18px] font-[600px]">
           Delayed Orders
         </span>
-        <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white md:mt-3 rounded-md">
+        <div className="flex flex-col justify-center items-center gap-2 h-[70px] bg-white lg:mt-3 rounded-md">
           <div className="flex items-center gap-10">
             <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
               <img

@@ -116,14 +116,14 @@ export default async function Home() {
 
   return (
     <section className="bg-[#F5F8FA] min-h-100">
-      <main className="w-full h-auto flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-3 shadow-md">
-        <div className="flex flex-col justify-center md:justify-between items-center w-full md:w-[950px] gap-3 h-auto md:h-[900px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className="flex  flex-col md:flex-row justify-between items-center mb-1 md:pt-3 px-2 h-auto md:h-[100px] w-full">
-            <div className="flex flex-col px-4 pr-60 md:pr-0">
+      <main className="w-full h-auto flex flex-col lg:flex-row justify-center gap-4 lg:gap-8 mt-3 shadow-md">
+        <div className="flex flex-col justify-center md:justify-between items-center w-full lg:w-[950px] gap-3 h-auto lg:h-[900px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
+          <div className="flex  flex-col lg:flex-row justify-between items-center mb-1 lg:pt-3 px-2 h-auto lg:h-[100px] w-full">
+            <div className="flex flex-col px-4 pr-60 lg:pr-0">
               <span className="text-[12px] md:text-[20px] font-semibold">
                 Orders Statistics
               </span>
-              <span className=" text-[#7E8299] text-[8px] md:text-[12px] font-medium tracking-tighter">
+              <span className=" text-[#7E8299] text-[8px] lg:text-[12px] font-medium tracking-tighter">
                 Last updated: {Date()}
               </span>
             </div>
@@ -141,8 +141,8 @@ export default async function Home() {
           <BarChart />
         </div>
 
-        <div className="flex flex-col shadow-lg items-center w-full md:w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px]">
-          <div className="flex  justify-center items-center w-full md:w-[406px] h-auto md:h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
+        <div className="flex flex-col shadow-lg items-center w-full lg:w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px]">
+          <div className="flex  justify-center items-center w-full lg:w-[406px] h-auto lg:h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
             <div className="flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md bg-[#4FC9F3] hover:cursor-pointer hover:bg-white hover:border-none transition">
               <img
                 className="w-4 h-3  hover:text-black "

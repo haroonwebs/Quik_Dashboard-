@@ -70,9 +70,9 @@ const BarChart = () => {
     : [];
 
   return (
-    <div className="flex flex-col justify-center items-center w-full md:mb-14 md:w-[900px] h-full md:h-[780px] border border-[#EFF2F5] rounded-md">
-      <div className="flex justify-around md:justify-between items-center w-full md:w-[850px] h-full mt-2 md:mt-0 md:h-[80px] ">
-        <div className="flex mb-2 md:mb-0 mt-2 md:mt-0 gap-2 ">
+    <div className="flex flex-col justify-center items-center w-full lg:mb-14 lg:w-[900px] h-full lg:h-[780px] border border-[#EFF2F5] rounded-md">
+      <div className="flex justify-around lg:justify-between items-center w-full lg:w-[850px] h-full mt-2 lg:mt-0 lg:h-[80px] ">
+        <div className="flex mb-2 md:mb-0 mt-2 lg:mt-0 gap-2 ">
           <img src="/images/Group 2169.png" alt="" />
           <span className="text-[14px] font-[500px]">Live Order</span>
         </div>
@@ -81,7 +81,7 @@ const BarChart = () => {
           <select
             value={timePeriod}
             onChange={(e) => setTimePeriod(e.target?.value)}
-            className="md:hidden rounded-md border border-[#EFF2F5] w-[109px] h-[29px] text-[#5E6278] text-[9px] font-[600px] outline-none bg-transparent"
+            className="lg:hidden rounded-md border border-[#EFF2F5] w-[109px] h-[29px] text-[#5E6278] text-[9px] font-[600px] outline-none bg-transparent"
           >
             <option value="day">Today</option>
             <option value="week">This week</option>
@@ -89,7 +89,7 @@ const BarChart = () => {
           </select>
 
           {/* Button Layout for Larger Screens */}
-          <div className="hidden md:flex justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
+          <div className="hidden lg:flex justify-center items-center rounded-md w-[230px] h-[35px] border border-[#EFF2F5]">
             <button
               onClick={() => setTimePeriod("day")}
               className={`flex justify-center items-center text-[9px] font-[600] rounded-md w-[80px] h-[32px] ${
@@ -123,7 +123,7 @@ const BarChart = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-end w-full md:w-[850px] h-full md:h-[620px] ">
+      <div className="flex justify-center items-end w-full lg:w-[850px] h-full lg:h-[620px] ">
         <MyBarChart
           lessValueOrders={lessValue}
           graterValueOrders={greaterValue}
