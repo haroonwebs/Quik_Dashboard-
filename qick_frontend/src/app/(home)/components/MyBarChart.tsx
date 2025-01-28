@@ -161,16 +161,16 @@ const MyBarChart: React.FC<MyCharProp> = ({
     datacolor2 = "#8AEFD1";
     bordercolor = "rgba(28, 58, 106, 1)";
   } else if (status === "delayed") {
-    datacolor1 = "#FFB5B5";
-    datacolor2 = "#D48989";
+    datacolor2 = "#FFB5B5";
+    datacolor1 = "#D48989";
     bordercolor = "rgba(28, 58, 106, 1)";
   } else if (status === "delivered") {
     datacolor1 = "#1fe070";
     datacolor2 = "#87f5b5";
     bordercolor = "rgba(28, 58, 106, 1)";
   } else {
-    datacolor1 = "rgba(79, 201, 243, 1)";
-    datacolor2 = "rgba(28, 58, 106, 1)";
+    datacolor2 = "rgba(79, 201, 243, 1)";
+    datacolor1 = "rgba(28, 58, 106, 1)";
     bordercolor = "rgba(28, 58, 106, 1)";
   }
 
