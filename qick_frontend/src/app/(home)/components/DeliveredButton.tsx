@@ -1,7 +1,8 @@
 "use client";
 import DeliveredOrder from "@/components/DeliveredOrder";
-import React from "react";
+import React, { useContext } from "react";
 import { ordertypes } from "@/types/ordertypes";
+import OrdersContext from "@/contexts/OrdersContext";
 
 interface DeliveredOrderProps {
   lessValue: ordertypes[] | never[];
@@ -14,7 +15,11 @@ const DeliveredButton: React.FC<DeliveredOrderProps> = ({
   graterValue,
   total,
 }) => {
+  const { setContextOrders } = useContext(OrdersContext);
+
   const handle_delivered = () => {
+    setContextOrders(true);
+
     window.history.pushState({}, "", `/order?order_status=${"delivered"}`);
   };
   return (

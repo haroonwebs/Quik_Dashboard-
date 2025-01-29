@@ -1,7 +1,8 @@
 "use client";
 import DougnatDelay from "@/components/DougnatDelay";
-import React from "react";
+import React, { useContext } from "react";
 import { ordertypes } from "@/types/ordertypes";
+import OrdersContext from "@/contexts/OrdersContext";
 
 interface DougnatDelayProps {
   lessValue: ordertypes[] | never[];
@@ -14,7 +15,11 @@ const DelayButton: React.FC<DougnatDelayProps> = ({
   graterValue,
   total,
 }) => {
+  const { setContextOrders } = useContext(OrdersContext);
+
   const handle_delay = () => {
+    setContextOrders(true);
+
     window.history.pushState({}, "", `/order?order_status=${"delayed"}`);
   };
   return (

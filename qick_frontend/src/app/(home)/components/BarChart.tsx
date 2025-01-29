@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import React from "react";
 import MyBarChart from "./MyBarChart";
 import { useSearchParams } from "next/navigation";
 import fetchById from "@/hooks/useFetchByStatus";
 import { ordertypes } from "@/types/ordertypes";
+// import OrdersContext from "@/contexts/OrdersContext";
 
 const BarChart = () => {
   const [status, setStatus] = useState<string | null>("live_orders");
@@ -14,10 +15,12 @@ const BarChart = () => {
   const [error, setError] = useState<any | null>(null);
   const [timePeriod, setTimePeriod] = useState("month");
   const searchParams = useSearchParams();
+  // const { setContextOrders } = useContext(OrdersContext);
 
   useEffect(() => {
     const status = searchParams?.get("order_status");
     setStatus(status);
+    //  setContextOrders(status);
     const startDate = searchParams?.get("startDate");
     setStartDate(startDate);
     const endDate = searchParams?.get("endDate");
@@ -29,24 +32,24 @@ const BarChart = () => {
       // Reset orders when fetching new data
       setOrders([]);
       try {
-        if ((status && start_Date) || end_Date) {
+        if (status && start_Date && end_Date) {
           // Fetch by both status and date
           const { orders, error } = await fetchById(
             `http://localhost:4000/api/v1/orders/range?status=${status}&start_date=${start_Date}&end_date=${end_Date}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
-        } else if (status) {
+        } else if (status && start_Date) {
           // Fetch by status only
           const { orders, error } = await fetchById(
-            `http://localhost:4000/api/v1/orders/status?status=${status}`
+            `http://localhost:4000/api/v1/orders/date?start_date=${start_Date}&status=${status}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);
-        } else if (start_Date) {
+        } else if (status) {
           // Fetch by date only
           const { orders, error } = await fetchById(
-            `http://localhost:4000/api/v1/orders/date?start_date=${start_Date}`
+            `http://localhost:4000/api/v1/orders/status?status=${status}`
           );
           if (error) throw new Error(error);
           setOrders(orders || []);

@@ -42,7 +42,7 @@ const Navbar = () => {
           <img src="/images/Group.png" alt="Not found" />
         </div>
         {isdropDownLinke && (
-          <div className="absolute sm:hidden w-36 h-80 top-14 left-6 bg-blue-400  rounded-t-sm rounded-b-lg shadow-lg bg-transparent">
+          <div className="absolute sm:hidden w-36 h-80 top-14 left-6 bg-blue-400  rounded-t-sm rounded-b-lg shadow-lg ">
             <ul className="flex flex-col gap-6 font-[400px] text-[#7E8299] ">
               <li className=" flex justify-center text-white font-bold text-[16px] items-center hover:text-[#4FC9F3] hover:font-[500px] hover:bg-[#f5f6f8] px-2 rounded-md">
                 Dashboard

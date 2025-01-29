@@ -9,6 +9,7 @@ import BarChart from "./(home)/components/BarChart";
 import TrendGraph from "@/components/TrendGraph";
 import SelectOrderStatus from "@/components/SelectOrderStatus";
 import DateRangeFilter from "./(home)/components/DateRangeFilter";
+import OrdersContextProvider from "@/contexts/OrdersContextProvider";
 
 export default async function Home() {
   // used usefetchOrders hook to fetch all orders from the database
@@ -115,8 +116,8 @@ export default async function Home() {
   console.log("deliveredAverage", deliveredAverage);
 
   return (
-    <section className="bg-[#edeff1] min-h-100">
-      <main className="w-full h-auto flex flex-col lg:flex-row justify-center gap-4 lg:gap-8 mt-3 shadow-md">
+    <section className="bg-[#edeff1] min-h-100 ">
+      <main className="w-full h-auto flex flex-col lg:flex-row justify-center gap-4 lg:gap-8 mt-3 shadow-md ">
         <div className="flex flex-col justify-center md:justify-between items-center w-full lg:w-[950px] gap-3 h-auto lg:h-[900px] border bg-[#FFFFFF] border-[#EFF2F5] rounded-tl-[8px] rounded-tr-[5px]">
           <div className="flex  flex-col lg:flex-row justify-between items-center mb-1 lg:pt-3 px-2 h-auto lg:h-[100px] w-full">
             <div className="flex flex-col px-4 pr-60 lg:pr-0">
@@ -141,7 +142,7 @@ export default async function Home() {
           <BarChart />
         </div>
 
-        <div className="flex flex-col shadow-lg items-center w-full lg:w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px]">
+        <div className="flex flex-col shadow-lg items-center w-full lg:w-[480px] h-auto border border-[#EFF2F5] gap-3 bg-[#FFFFFF] rounded-tl-[8px] rounded-tr-[5px] pb-5">
           <div className="flex  justify-center items-center w-full lg:w-[406px] h-auto lg:h-[47px] gap-2 border border-[#EFF2F5] rounded-md mt-6">
             <div className="flex justify-center items-center w-[192px] gap-1 h-[32px] border border-[#EFF2F5] rounded-md bg-[#4FC9F3] hover:cursor-pointer hover:bg-white hover:border-none transition">
               <img
@@ -185,6 +186,7 @@ export default async function Home() {
             lessValue={lessValueAverage}
             graterValue={graterValueAverage}
           />
+
           <DeliveredButton
             graterValue={graterValueDelivered}
             lessValue={lessValueDelivered}

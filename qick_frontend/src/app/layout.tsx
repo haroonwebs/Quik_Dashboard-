@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "@/app/globals.css";
+import OrdersContextProvider from "@/contexts/OrdersContextProvider";
 export const metadata = {
   title: "Qick Dahsboard",
   description: "Your Site Description",
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <OrdersContextProvider>
+          <Navbar />
+          {children}
+        </OrdersContextProvider>
       </body>
     </html>
   );

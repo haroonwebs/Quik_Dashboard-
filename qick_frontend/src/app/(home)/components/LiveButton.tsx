@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DougnatLive from "@/components/DougnatLive";
 import { ordertypes } from "@/types/ordertypes";
+import OrdersContext from "@/contexts/OrdersContext";
 
 interface LiveButtonProps {
   lessValue: ordertypes[] | never[];
@@ -14,7 +15,10 @@ const LiveButton: React.FC<LiveButtonProps> = ({
   lessValue,
   graterValue,
 }) => {
+  const { setContextOrders } = useContext(OrdersContext);
+
   const handle_LiveUrl = () => {
+    setContextOrders(true);
     window.history.pushState({}, "", `/order?order_status=${"live_orders"}`);
   };
 
@@ -42,28 +46,28 @@ const LiveButton: React.FC<LiveButtonProps> = ({
           <div className="flex items-center gap-10">
             <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
               <img
-                src="/images/Rectangle 8219.png"
+                src="/images/Rectangle 8220.png"
                 alt="not found"
                 className="h-[7px] w-[7px]"
               />
               <span>Value &lt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {graterValue.length} orders
+              {lessValue.length} orders
             </div>
           </div>
           <div className="w-[80%] h-[1px] bg-[#EFF2F5]"></div>
           <div className="flex items-center gap-10">
             <div className="flex justify-evenly items-center gap-2  font-[500px] text-xs">
               <img
-                src="/images/Rectangle 8220.png"
+                src="/images/Rectangle 8219.png"
                 alt="not found"
                 className="h-[7px] w-[7px]"
               />
               <span>Value &gt; 1000.00L</span>
             </div>
             <div className="text-xs font-[500px] text-[#7E8299]">
-              {lessValue.length} orders
+              {graterValue.length} orders
             </div>
           </div>
         </div>

@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import DougnatAverage from "@/components/DougnatAverage";
 import { ordertypes } from "@/types/ordertypes";
+import OrdersContext from "@/contexts/OrdersContext";
 
 interface DougnatAverageProps {
   lessValue: ordertypes[] | never[];
@@ -14,7 +15,11 @@ const AverageButton: React.FC<DougnatAverageProps> = ({
   graterValue,
   total,
 }) => {
+  const { setContextOrders } = useContext(OrdersContext);
+
   const handle_Average = () => {
+    setContextOrders(true);
+
     window.history.pushState({}, "", `/order?order_status=${"average"}`);
   };
   return (

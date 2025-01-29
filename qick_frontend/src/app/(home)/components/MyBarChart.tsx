@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ordertypes } from "@/types/ordertypes";
 import {
@@ -13,6 +13,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import OrdersContext from "@/contexts/OrdersContext";
 
 // Register Chart.js components
 ChartJS.register(
@@ -46,7 +47,9 @@ const MyBarChart: React.FC<MyCharProp> = ({
     data_1: [],
     data_2: [],
   });
+  const { Contextorders } = useContext(OrdersContext);
 
+  console.log("Contextorders in barChart.ts", Contextorders);
   useEffect(() => {
     const statusParam = searchParams?.get("order_status");
     setStatus(statusParam);
@@ -218,7 +221,7 @@ const MyBarChart: React.FC<MyCharProp> = ({
         stacked: true,
         beginAtZero: true,
         min: 0, // Set minimum value
-        max: 120, // Set maximum value
+        max: 60, // Set maximum value
         ticks: {
           stepSize: 20,
         },

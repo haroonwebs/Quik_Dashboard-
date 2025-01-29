@@ -204,22 +204,14 @@ export const OrdersByDate = async (
 ): Promise<any> => {
   try {
     const orderRepository = AppDataSource.getRepository(Order);
-    const { start_date } = req.query as any;
+    const { start_date, status } = req.query as any;
 
-    if (!start_date) {
-      return res.status(400).json({
-        success: false,
-        message: "Date parameter is required",
-      });
-    }
-
-    // const UTCstartDate = new Date(start_date + "T00:00:00Z"); // Start of the day in UTC
     const endDate = new Date(start_date + "T23:59:59Z"); // End of the day in UTC
 
-    // Use a query to fetch orders where the date part of created_at matches the provided date
     const orders = await orderRepository
       .createQueryBuilder("order")
-      .where("order.created_at >= :start_date", { start_date })
+      .where("order.order_status = :status", { status })
+      .andWhere("order.created_at >= :start_date", { start_date })
       .andWhere("order.created_at <= :endDate", { endDate })
       .getMany();
 
